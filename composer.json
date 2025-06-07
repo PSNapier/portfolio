@@ -1,0 +1,6 @@
+{
+     "name": "nuxt-app",
+     "description": "Nuxt 3 frontend deployed via Forge",
+     "type": "project",
+     "require": {}
+}
