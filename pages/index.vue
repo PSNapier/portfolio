@@ -86,7 +86,7 @@ const projects = [
 <template class="bg-neutral-50">
      <main
           :class="[
-               'f-full flex min-h-screen cursor-default flex-col items-center p-4 transition-colors duration-300',
+               'f-full flex min-h-screen cursor-default flex-col items-center transition-colors duration-300',
                isDark
                     ? 'bg-neutral-900 text-neutral-50'
                     : 'bg-neutral-50 text-neutral-900',
@@ -101,7 +101,7 @@ const projects = [
                     @click="selectedColor = color" />
                <!-- Theme toggle button -->
                <button
-                    class="ml-2 flex h-8 w-8 items-center justify-center rounded-full border border-neutral-300 transition-colors duration-200 sm:ml-4 dark:border-neutral-700"
+                    class="ml-2 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full transition-colors transition-transform duration-200 hover:scale-125 sm:ml-4 dark:border-neutral-700"
                     :class="
                          isDark
                               ? 'bg-neutral-50'
@@ -118,7 +118,7 @@ const projects = [
                </button>
           </div>
           <section
-               class="relative flex min-h-[300px] max-w-[820px] flex-col overflow-hidden">
+               class="relative flex min-h-[300px] max-w-[820px] flex-col overflow-hidden px-4">
                <div
                     class="font-jetbrains-mono relative z-10 mt-20 text-7xl font-bold">
                     <span
@@ -135,7 +135,7 @@ const projects = [
                </div>
           </section>
 
-          <section class="mx-auto mt-10 w-full max-w-4xl space-y-16">
+          <section class="mx-auto mt-10 w-full max-w-4xl space-y-16 px-4">
                <div
                     v-for="(project, idx) in projects"
                     :key="idx"
@@ -227,7 +227,7 @@ const projects = [
           </section>
 
           <footer
-               class="mt-16 flex w-full justify-center text-center text-sm text-neutral-500">
+               class="mt-16 mb-4 flex w-full justify-center text-center text-sm text-neutral-500">
                &copy; Abature Studio {{ new Date().getFullYear() }}
           </footer>
      </main>
