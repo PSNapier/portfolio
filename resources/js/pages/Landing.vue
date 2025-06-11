@@ -120,10 +120,11 @@ const projects = [
                </div>
                <div
                     class="font-inter color-animate relative z-10 mt-4 min-h-[60px] text-2xl leading-snug transition-colors">
-                    I craft clean, functional websites for artists, small
-                    businesses, and odd little corners of the internet. Built
-                    with Tailwind, Laravel, and JavaScript—always fast,
-                    responsive, and a little bit off the beaten path.
+                    Hi there! I am A.R. Jones of Abature Studio. Crafting clean,
+                    functional websites for artists, small businesses, and odd
+                    little corners of the internet. Built with Tailwind,
+                    Laravel, and JavaScript—always fast, responsive, and a
+                    little bit off the beaten path.
                </div>
           </section>
 
