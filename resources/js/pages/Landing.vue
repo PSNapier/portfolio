@@ -200,7 +200,7 @@ const projects = [
           </section>
 
           <section
-               class="color-animate mt-16 flex w-full justify-center transition-colors"
+               class="mt-16 flex w-full justify-center transition-colors"
                :style="{
                     backgroundColor: selectedColor,
                     color: isDark ? '#171717' : '#fafafa',
