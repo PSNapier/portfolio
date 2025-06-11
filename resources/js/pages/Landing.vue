@@ -1,17 +1,26 @@
 <script setup lang="ts">
 import { MoonIcon, SunIcon } from '@heroicons/vue/24/outline';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 
-// const colors = ['#f87171', '#fbbf24', '#34d399', '#60a5fa', '#a78bfa'];
-const colors = [
+const colorsSoft = ['#f87171', '#fbbf24', '#34d399', '#60a5fa', '#a78bfa'];
+const colorsVivid = [
      '#ef4444', // red-500
      '#eab308', // yellow-500
      '#10b981', // green-500
      '#3b82f6', // blue-500
      '#8b5cf6', // purple-500
 ];
-const selectedColor = ref(colors[0]);
 const isDark = ref(false);
+let colors = isDark.value ? colorsSoft : colorsVivid;
+const selectedColor = ref(colors[0]);
+
+watch(isDark, (val) => {
+     const prevColors = val ? colorsVivid : colorsSoft;
+     const newColors = val ? colorsSoft : colorsVivid;
+     const idx = prevColors.indexOf(selectedColor.value);
+     colors = newColors;
+     selectedColor.value = newColors[idx >= 0 ? idx : 0];
+});
 
 onMounted(() => {
      if (
