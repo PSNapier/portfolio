@@ -45,7 +45,7 @@ const projects = [
           title: 'Rattlesnake Mountain',
           subtitle: 'Interactive ARPG world',
           image: '/imgs/example-rattlesnakemountain.png',
-          link: 'https://rattlesnakemountain.abature.studio',
+          link: 'https://rattlesnake-mountain.abature.studio',
           stack: ['Vue', 'Tailwind', 'Laravel'],
           description:
                'Current client project migrating an ARPG world to a new platform using Vue 3 and TailwindCSS, featuring a custom CMS, rollers, and admin tools.',
