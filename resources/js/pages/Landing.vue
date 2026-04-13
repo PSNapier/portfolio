@@ -186,7 +186,7 @@ const projects: Project[] = [
 
           <button
                type="button"
-               class="fixed bottom-5 left-1/2 z-40 max-w-[min(100vw-2rem,28rem)] -translate-x-1/2 rounded-full px-3.5 py-2 text-center text-xs leading-snug font-medium shadow-md transition-[opacity,transform] duration-200 hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 sm:text-sm"
+               class="examples-cta fixed bottom-5 left-1/2 z-40 max-w-[min(100vw-2rem,28rem)] -translate-x-1/2 rounded-full px-3.5 py-2 text-center text-xs leading-snug font-medium shadow-md hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 sm:text-sm"
                :style="{
                     backgroundColor: selectedColor,
                     color: isDark ? '#171717' : '#fafafa',
@@ -458,5 +458,14 @@ const projects: Project[] = [
 
 .color-animate {
      transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Same duration + easing as .color-animate; keep scroll fade / hover scale at 200ms */
+.examples-cta {
+     transition:
+          background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+          color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+          opacity 0.2s ease,
+          transform 0.2s ease;
 }
 </style>
