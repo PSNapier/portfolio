@@ -129,7 +129,7 @@ const projects: Project[] = [
           ],
           stack: ['Vue', 'Tailwind', 'Laravel'],
           description:
-               'Custom HARPG site for Siat-s: Laravel, Vue 3 with Inertia, Tailwind, and MySQL for worldbuilding, interactive rollers, and member accounts. Standout work includes a deep, fully tailored admin panel and a pipeline that automatically imports the prior site’s shop data so inventory and history carry over cleanly. No public URL yet; project still in active development.',
+               'Custom HARPG site. Laravel, Vue 3 with Inertia, Tailwind, and MySQL. Full user account system with character creation, image upload, interactive rollers, and much more! Standout work includes a deep, fully tailored admin panel and a pipeline that automatically imports the prior site’s shop data so inventory and history carry over cleanly. No public URL yet; project still in active development.',
      },
      {
           title: 'Sigil Maker',
