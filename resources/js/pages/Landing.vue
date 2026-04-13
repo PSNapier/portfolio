@@ -1,7 +1,24 @@
 <script setup lang="ts">
 import { MoonIcon, SunIcon } from '@heroicons/vue/24/outline';
-import { onMounted, ref, watch } from 'vue';
+import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
 
+interface ProjectExtraImage {
+     src: string;
+     alt: string;
+}
+
+interface Project {
+     title: string;
+     subtitle: string;
+     image: string;
+     link: string;
+     stack: string[];
+     description: string;
+     ctaText?: string;
+     extraImages?: ProjectExtraImage[];
+}
+
+// R Y G B V (left→right); soft/vivid same index for theme toggle mapping
 const colorsSoft = ['#f87171', '#fbbf24', '#34d399', '#60a5fa', '#a78bfa'];
 const colorsVivid = [
      '#ef4444', // red-500
@@ -12,7 +29,7 @@ const colorsVivid = [
 ];
 const isDark = ref(false);
 let colors = isDark.value ? colorsSoft : colorsVivid;
-const selectedColor = ref(colors[0]);
+const selectedColor = ref(colorsVivid[3]); // default accent: blue
 
 watch(isDark, (val) => {
      const prevColors = val ? colorsVivid : colorsSoft;
@@ -22,60 +39,106 @@ watch(isDark, (val) => {
      selectedColor.value = newColors[idx >= 0 ? idx : 0];
 });
 
-onMounted(() => {
-     if (
-          window.matchMedia &&
-          window.matchMedia('(prefers-color-scheme: dark)').matches
-     ) {
-          isDark.value = true;
-     }
+/** Pixels of scroll over which fixed controls fade out (examples CTA + theme bar) */
+const SCROLL_FADE_DISTANCE = 200;
+
+const scrollY = ref(0);
+
+/** Scroll target for the projects list (button + optional URL #projects) */
+const projectsSectionRef = ref<HTMLElement | null>(null);
+
+/** Shared scroll fade (examples CTA + accent / theme controls) */
+const scrollFadeOpacity = computed(() => {
+     const y = scrollY.value;
+     return Math.max(0, Math.min(1, 1 - y / SCROLL_FADE_DISTANCE));
 });
 
-const projects = [
+function updateScroll() {
+     scrollY.value = window.scrollY;
+}
+
+function scrollToProjects() {
+     projectsSectionRef.value?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+     });
+}
+
+onMounted(() => {
+     updateScroll();
+     window.addEventListener('scroll', updateScroll, { passive: true });
+     void nextTick(() => {
+          if (window.location.hash === '#projects') {
+               projectsSectionRef.value?.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start',
+               });
+          }
+     });
+});
+
+onUnmounted(() => {
+     window.removeEventListener('scroll', updateScroll);
+});
+
+const projects: Project[] = [
      {
           title: 'ARPG Roller Demos',
           subtitle: 'Interactive tools for equine genetics enthusiasts',
           image: '/imgs/example-breedingroller.png',
           link: 'https://arpg.abature.studio/breeding-roller',
-          stack: ['JavaScript', 'CSS', 'Node.js'],
+          stack: ['JavaScript', 'CSS'],
           description:
-               'Client project delivering automated rollers for ARPG players and admins, built with JavaScript and CSS for seamless interaction.',
+               'Demo project providing examples of automated rollers for ARPG groups and admin, built with JavaScript and CSS for seamless interaction.',
+     },
+     {
+          title: 'Nordanner',
+          subtitle:
+               'Lorekeeper site with custom  masterlist, crafting, and staff rollers',
+          image: '/imgs/example-nordanner.png',
+          link: '#',
+          ctaText: 'Public site not live yet (in development)',
+          stack: ['Laravel', 'PHP', 'Blade', 'Lorekeeper'],
+          description:
+               'Adds integrated admin Rollers (arena, breeding, cartography) with Lorekeeper-native styling, automated logbook import for over 19,000 characters, advanced search support for custom info fields, lineage/info tab updates on character and MYO pages, and more. No public URL yet; project still in active development.',
+     },
+     {
+          title: 'Critterverse',
+          subtitle: 'Rollers for Critterverse ARPG',
+          image: '/imgs/example-critterverse.png',
+          link: 'https://critterverse.abature.studio/',
+          stack: ['JavaScript', 'Tailwind', 'HTML'],
+          description:
+               'Tabbed interface for breeding rolls (sire/dam, mutations, items) and a separate randomizer, with results rendered in-page. JavaScript with Tailwind CSS.',
      },
      {
           title: 'Rattlesnake Mountain',
           subtitle: 'Interactive ARPG world',
           image: '/imgs/example-rattlesnakemountain.png',
-          link: 'https://rattlesnake-mountain.abature.studio',
+          link: '#',
+          ctaText: 'Public site not live yet (in development)',
+          extraImages: [
+               {
+                    src: '/imgs/example-rattlesnakemountain-1.png',
+                    alt: 'Rattlesnake Mountain admin panel — CMS menu and pages',
+               },
+               {
+                    src: '/imgs/example-rattlesnakemountain-2.png',
+                    alt: 'Rattlesnake Mountain shop — item grid after data import',
+               },
+          ],
           stack: ['Vue', 'Tailwind', 'Laravel'],
           description:
-               'Current client project migrating an ARPG world to a new platform using Vue 3 and TailwindCSS, featuring a custom CMS, rollers, and admin tools.',
-     },
-     {
-          title: 'Merakis Activity Roller',
-          subtitle: 'Automated roller inspired by Pokémon encounters',
-          image: '/imgs/example-merakisactivityroller.png',
-          link: 'https://github.com/PSNapier/merakis-activity-roller',
-          stack: ['JavaScript', 'CSS'],
-          description:
-               'Client project implementing an automated system for Pokémon-style encounters, crafted with JavaScript and CSS.',
+               'Custom HARPG site for Siat-s: Laravel, Vue 3 with Inertia, Tailwind, and MySQL for worldbuilding, interactive rollers, and member accounts. Standout work includes a deep, fully tailored admin panel and a pipeline that automatically imports the prior site’s shop data so inventory and history carry over cleanly. No public URL yet; project still in active development.',
      },
      {
           title: 'Sigil Maker',
-          subtitle: 'A tool that automatically designs sigils',
+          subtitle: 'Letter-to-number mapping and canvas sigil paths',
           image: '/imgs/example-sigilmaker.png',
           link: 'https://sigilmaker.abature.studio/',
-          stack: ['JavaScript', 'ChatGPT'],
+          stack: ['JavaScript', 'HTML', 'Canvas'],
           description:
-               'A fun side project created with ChatGPT that generates custom sigils from user input.',
-     },
-     {
-          title: 'Portfolio Website',
-          subtitle: 'Personal branding & project showcase',
-          image: '/imgs/example-youarehere.jpg',
-          link: '',
-          stack: ['Vue', 'TailwindCSS', 'ChatGPT'],
-          description:
-               'You are here! 😄 Built with Vue 3, TailwindCSS, and ChatGPT, featuring a customizable theme for extra flair.',
+               'Tool that turns typed text into a digit string using a fixed letter-to-digit table, with an optional step that strips duplicate digits. The canvas places digits 0–9 on a circle and draws line segments in order so the path reads like a classic sigil construction.',
      },
 ];
 </script>
@@ -89,7 +152,14 @@ const projects = [
                     : 'bg-neutral-50 text-neutral-900',
           ]">
           <div
-               class="fixed top-3 right-3 z-30 flex items-center gap-2 sm:top-6 sm:right-8 sm:gap-3">
+               class="fixed top-3 right-3 z-30 flex items-center gap-2 transition-[opacity,transform] duration-200 sm:top-6 sm:right-8 sm:gap-3"
+               :inert="scrollFadeOpacity < 0.02"
+               :style="{
+                    opacity: scrollFadeOpacity,
+                    pointerEvents:
+                         scrollFadeOpacity < 0.02 ? 'none' : 'auto',
+               }"
+               :aria-hidden="scrollFadeOpacity < 0.02">
                <div
                     v-for="(color, idx) in colors"
                     :key="idx"
@@ -114,8 +184,27 @@ const projects = [
                          :style="{ color: selectedColor }" />
                </button>
           </div>
+
+          <button
+               type="button"
+               class="fixed bottom-5 left-1/2 z-40 max-w-[min(100vw-2rem,28rem)] -translate-x-1/2 rounded-full px-3.5 py-2 text-center text-xs font-medium leading-snug shadow-md transition-[opacity,transform] duration-200 hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 sm:text-sm"
+               :style="{
+                    backgroundColor: selectedColor,
+                    color: isDark ? '#171717' : '#fafafa',
+                    '--tw-ring-color': selectedColor,
+                    opacity: scrollFadeOpacity,
+                    pointerEvents:
+                         scrollFadeOpacity < 0.02 ? 'none' : 'auto',
+               }"
+               :aria-hidden="scrollFadeOpacity < 0.02"
+               :tabindex="scrollFadeOpacity < 0.02 ? -1 : 0"
+               aria-label="Scroll to projects"
+               @click="scrollToProjects">
+               Show me examples...
+          </button>
+
           <section
-               class="relative flex min-h-[340px] max-w-[820px] flex-col overflow-hidden px-4">
+               class="relative flex min-h-0 max-w-[820px] flex-col px-4 pb-8">
                <div
                     class="font-jetbrains-mono color-animate relative z-10 mt-20 min-h-[90px] text-7xl leading-tight font-bold transition-colors">
                     <span
@@ -128,22 +217,70 @@ const projects = [
                     </span>
                </div>
                <div
-                    class="font-inter color-animate relative z-10 mt-4 min-h-[60px] text-2xl leading-snug transition-colors">
-                    Hi there! I am A.R. Jones of Abature Studio. Crafting clean,
-                    functional websites for artists, small businesses, and odd
-                    little corners of the internet. Built with Tailwind,
-                    Laravel, and JavaScript—always fast, responsive, and a
-                    little bit off the beaten path.
+                    class="font-inter color-animate relative z-10 mt-4 max-w-none space-y-4 text-base leading-relaxed transition-colors md:text-lg"
+                    :class="isDark ? 'text-neutral-200' : 'text-neutral-800'">
+                    <p
+                         class="font-jetbrains-mono color-animate text-xl leading-snug font-bold transition-colors md:text-2xl">
+                         I build strange little machines for the internet.<br />
+                         Mostly for ARPGs. Mostly involving genetics. Always
+                         involving a lot of logic.
+                    </p>
+                    <p>
+                         I’ve spent the last decade deep in niche systems,
+                         translating complex rule sets into reliable,
+                         client-facing tools that streamline both administration
+                         and user experience.
+                    </p>
+                    <p>
+                         I don’t just build what you describe, I understand how
+                         these systems evolve, break, and scale over time. My
+                         work prioritizes usability, performance, and making
+                         things make sense.
+                    </p>
+                    <div>
+                         <p class="font-semibold">Specializing in:</p>
+                         <ul
+                              class="mt-2 list-disc space-y-1 pl-6 marker:text-neutral-500 dark:marker:text-neutral-400">
+                              <li>ARPG rollers and full-site ecosystems</li>
+                              <li>
+                                   Refactoring and stabilizing abandoned or
+                                   failing projects
+                              </li>
+                              <li>
+                                   Automating large datasets and legacy systems
+                                   (10k+ records)
+                              </li>
+                         </ul>
+                    </div>
+                    <p>
+                         <span class="font-semibold">Also: I fix things.</span>
+                         Clients often come to me when projects stall, break
+                         down, or disappear into silence. I focus on clear
+                         communication, stable architecture, and keeping things
+                         maintainable long-term.
+                    </p>
+                    <p>
+                         My workflow is structured but flexible: define the
+                         system → build in iterative sessions → refine as we go.
+                         You’ll always know what’s happening, what’s done, and
+                         what’s next with working implementations delivered
+                         early.
+                    </p>
                </div>
           </section>
 
-          <section class="mx-auto mt-10 w-full max-w-4xl space-y-16 px-4">
+          <section
+               id="projects"
+               ref="projectsSectionRef"
+               aria-label="Projects"
+               class="mx-auto mt-10 w-full max-w-4xl scroll-mt-8 space-y-16 px-4">
                <div
                     v-for="(project, idx) in projects"
                     :key="idx"
                     class="flex flex-col items-start gap-8 md:flex-row">
                     <!-- Image -->
                     <a
+                         v-if="project.link !== '#'"
                          :href="project.link"
                          target="_blank"
                          rel="noopener"
@@ -153,6 +290,14 @@ const projects = [
                               :alt="project.title"
                               class="h-auto w-full max-w-full rounded bg-neutral-100 object-contain" />
                     </a>
+                    <div
+                         v-else
+                         class="block w-full overflow-hidden rounded-lg shadow-lg transition-transform hover:scale-105 md:w-1/2">
+                         <img
+                              :src="project.image"
+                              :alt="project.title"
+                              class="h-auto w-full max-w-full rounded bg-neutral-100 object-contain" />
+                    </div>
                     <!-- Text -->
                     <div class="flex w-full flex-col gap-1 md:w-1/2">
                          <h2
@@ -190,11 +335,43 @@ const projects = [
                                         ? 'text-neutral-200'
                                         : 'text-neutral-800'
                               "
-                              class="color-animate text-base transition-colors">
+                              class="color-animate mt-2 text-base transition-colors">
                               {{ project.description }}
                          </p>
                          <div
-                              v-if="project.link"
+                              v-if="project.extraImages?.length"
+                              class="mt-3 grid grid-cols-2 gap-2 sm:max-w-md sm:grid-cols-2">
+                              <a
+                                   v-for="(img, gIdx) in project.extraImages"
+                                   :key="gIdx"
+                                   :href="img.src"
+                                   target="_blank"
+                                   rel="noopener noreferrer"
+                                   class="group relative block aspect-video w-full overflow-hidden rounded-md border shadow-sm transition-transform hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+                                   :class="
+                                        isDark
+                                             ? 'border-neutral-600 bg-neutral-800 focus-visible:ring-offset-neutral-900'
+                                             : 'border-neutral-200 bg-neutral-100 focus-visible:ring-offset-neutral-50'
+                                   "
+                                   :style="{
+                                        '--tw-ring-color': selectedColor,
+                                   }"
+                                   :aria-label="`Open image in new tab: ${img.alt}`">
+                                   <img
+                                        :src="img.src"
+                                        :alt="img.alt"
+                                        class="h-full w-full object-cover object-top" />
+                                   <div
+                                        class="pointer-events-none absolute inset-0 flex items-center justify-center bg-black/60 opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100">
+                                        <span
+                                             class="px-3 text-center text-sm font-semibold text-white drop-shadow-md">
+                                             Open in new tab
+                                        </span>
+                                   </div>
+                              </a>
+                         </div>
+                         <div
+                              v-if="project.link && project.link !== '#'"
                               class="mt-2">
                               <a
                                    :href="project.link"
@@ -205,6 +382,16 @@ const projects = [
                                    View Project &rarr;
                               </a>
                          </div>
+                         <p
+                              v-else-if="project.link === '#'"
+                              class="color-animate mt-2 text-sm font-semibold"
+                              :class="
+                                   isDark
+                                        ? 'text-neutral-400'
+                                        : 'text-neutral-500'
+                              ">
+                              {{ project.ctaText }}
+                         </p>
                     </div>
                </div>
           </section>
@@ -223,7 +410,7 @@ const projects = [
                     <p
                          class="font-inter color-animate text-lg transition-colors">
                          Interested in comissioning a project or hiring me?<br />Email
-                         me your qeuestions and inquiries at
+                         me your questions and inquiries at
                          <a
                               href="mailto:AbatureStudio@gmail.com?subject=Web%20Dev%20Inquiry"
                               class="color-animate underline underline-offset-2 transition transition-colors hover:opacity-50"
@@ -265,7 +452,7 @@ const projects = [
      bottom: 0.1em;
      width: 100%;
      height: 0.07em;
-     background: var(--accent-color, #f87171);
+     background: var(--accent-color, #3b82f6);
      border-radius: 999px;
      transition: background 0.3s;
      z-index: -1;
