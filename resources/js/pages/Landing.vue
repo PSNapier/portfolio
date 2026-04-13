@@ -100,11 +100,11 @@ const projects: Project[] = [
           ctaText: 'Public site not live yet (in development)',
           stack: ['Laravel', 'PHP', 'Blade', 'Lorekeeper'],
           description:
-               'Adds integrated admin Rollers (arena, breeding, cartography) with Lorekeeper-native styling, automated logbook import for over 19,000 characters, advanced search support for custom info fields, lineage/info tab updates on character and MYO pages, and more. No public URL yet; project still in active development.',
+               'Adds integrated admin Rollers (arena, breeding, cartography) with Lorekeeper-native styling, automated logbook import for over 19,000 characters, advanced search support for custom info fields, lineage/info tab updates on character and MYO pages, and more.',
      },
      {
           title: 'Critterverse',
-          subtitle: 'Rollers for Critterverse ARPG',
+          subtitle: 'Rollers for the Critterverse ARPG',
           image: '/imgs/example-critterverse.png',
           link: 'https://critterverse.abature.studio/',
           stack: ['JavaScript', 'Tailwind', 'HTML'],
@@ -113,7 +113,7 @@ const projects: Project[] = [
      },
      {
           title: 'Rattlesnake Mountain',
-          subtitle: 'Interactive ARPG world',
+          subtitle: 'Custom ARPG site',
           image: '/imgs/example-rattlesnakemountain.png',
           link: '#',
           ctaText: 'Public site not live yet (in development)',
@@ -133,7 +133,7 @@ const projects: Project[] = [
      },
      {
           title: 'Sigil Maker',
-          subtitle: 'Letter-to-number mapping and canvas sigil paths',
+          subtitle: 'Automated sigil crafting',
           image: '/imgs/example-sigilmaker.png',
           link: 'https://sigilmaker.abature.studio/',
           stack: ['JavaScript', 'HTML', 'Canvas'],
@@ -156,8 +156,7 @@ const projects: Project[] = [
                :inert="scrollFadeOpacity < 0.02"
                :style="{
                     opacity: scrollFadeOpacity,
-                    pointerEvents:
-                         scrollFadeOpacity < 0.02 ? 'none' : 'auto',
+                    pointerEvents: scrollFadeOpacity < 0.02 ? 'none' : 'auto',
                }"
                :aria-hidden="scrollFadeOpacity < 0.02">
                <div
@@ -187,14 +186,13 @@ const projects: Project[] = [
 
           <button
                type="button"
-               class="fixed bottom-5 left-1/2 z-40 max-w-[min(100vw-2rem,28rem)] -translate-x-1/2 rounded-full px-3.5 py-2 text-center text-xs font-medium leading-snug shadow-md transition-[opacity,transform] duration-200 hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 sm:text-sm"
+               class="fixed bottom-5 left-1/2 z-40 max-w-[min(100vw-2rem,28rem)] -translate-x-1/2 rounded-full px-3.5 py-2 text-center text-xs leading-snug font-medium shadow-md transition-[opacity,transform] duration-200 hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 sm:text-sm"
                :style="{
                     backgroundColor: selectedColor,
                     color: isDark ? '#171717' : '#fafafa',
                     '--tw-ring-color': selectedColor,
                     opacity: scrollFadeOpacity,
-                    pointerEvents:
-                         scrollFadeOpacity < 0.02 ? 'none' : 'auto',
+                    pointerEvents: scrollFadeOpacity < 0.02 ? 'none' : 'auto',
                }"
                :aria-hidden="scrollFadeOpacity < 0.02"
                :tabindex="scrollFadeOpacity < 0.02 ? -1 : 0"
