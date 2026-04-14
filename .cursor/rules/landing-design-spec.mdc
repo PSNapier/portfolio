@@ -1,0 +1,16 @@
+---
+description: 'Landing page design spec and guardrails'
+alwaysApply: true
+---
+
+Landing page design spec (`resources/js/pages/Landing.vue`):
+
+- Structure: single-column flow inside full-height `main`; section order fixed: top controls, examples CTA, hero, projects, contact, footer.
+- Theme: neutral base palette with dark/light toggle; preserve smooth theme transition (`300ms`) for background/text.
+- Accent system: one selected accent color drives key highlights and text selection via CSS vars (`--selection-bg`, `--accent-color`).
+- Typography: body/headings use Inter; code/tech labels use JetBrains Mono.
+- Motion: color transitions `300ms` cubic-bezier; micro interactions (scroll-fade, hover scale, CTA opacity/transform) stay `200ms` ease.
+- Navigation behavior: hash `#projects` and CTA action both smooth-scroll to projects section.
+- Component boundary: keep page as composition/orchestration layer; section visuals and content live in dedicated `landing/*Section.vue` components.
+
+When editing Landing UI, keep these constraints unless user explicitly requests a redesign.

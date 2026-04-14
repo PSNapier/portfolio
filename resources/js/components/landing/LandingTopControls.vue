@@ -37,13 +37,13 @@ const emit = defineEmits<{
                     GitHub
                </a>
                <a
-                    href="#"
+                    :href="route('blog.index')"
                     class="font-jetbrains-mono color-animate inline-flex items-center gap-1 text-sm font-semibold decoration-transparent decoration-1 underline-offset-4 transition-[color,text-decoration-color,transform] duration-200 hover:scale-105 hover:underline hover:decoration-current"
                     :style="{ color: selectedColor }">
                     <NewspaperIcon
                          class="h-4 w-4"
                          aria-hidden="true" />
-                    Blog (coming soon!)
+                    Blog
                </a>
           </div>
      </div>
