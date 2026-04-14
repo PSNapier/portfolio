@@ -64,7 +64,7 @@ interface BlogIndexPageProps {
 const props = defineProps<BlogIndexPageProps>();
 
 const modeKey = 'blog-view-mode';
-const viewMode = ref<'paginated' | 'infinite'>('paginated');
+const viewMode = ref<'paginated' | 'infinite'>('infinite');
 const search = ref(props.filters.search ?? '');
 const selectedTag = ref(props.filters.tag ?? '');
 const sort = ref(props.filters.sort || 'newest');
