@@ -58,7 +58,11 @@ defineProps<{
                          <component
                               :is="getTechIcon(tech)"
                               v-if="getTechIcon(tech)"
-                              :stroke="tech.toLowerCase() === 'laravel' ? 1 : undefined"
+                              :stroke="
+                                   tech.toLowerCase() === 'laravel'
+                                        ? 1
+                                        : undefined
+                              "
                               class="h-3.5 w-3.5 shrink-0"
                               aria-hidden="true" />
                          {{ tech }}

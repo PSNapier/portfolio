@@ -64,7 +64,7 @@ function getTechIcon(tech: string) {
 <template class="bg-neutral-50">
      <main
           :class="[
-               'f-full flex min-h-screen cursor-default flex-col items-center transition-colors duration-300',
+               'flex w-full min-h-screen cursor-default flex-col items-center overflow-x-hidden pb-24 transition-colors duration-300',
                isDark
                     ? 'bg-neutral-900 text-neutral-50'
                     : 'bg-neutral-50 text-neutral-900',
@@ -135,16 +135,16 @@ function getTechIcon(tech: string) {
 }
 
 .color-animate {
-     transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+     transition: color var(--motion-duration-color) var(--motion-ease-standard);
 }
 
-/* Same duration + easing as .color-animate; keep scroll fade / hover scale at 200ms */
+/* Use shared motion tokens for consistency across pages/components. */
 .examples-cta {
      transition:
-          background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-          color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-          opacity 0.2s ease,
-          transform 0.2s ease;
+          background-color var(--motion-duration-color) var(--motion-ease-standard),
+          color var(--motion-duration-color) var(--motion-ease-standard),
+          opacity var(--motion-duration-micro) var(--motion-ease-micro),
+          transform var(--motion-duration-micro) var(--motion-ease-micro);
 }
 
 ::selection {

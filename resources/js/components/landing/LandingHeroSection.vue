@@ -13,9 +13,9 @@ defineProps<{
 </script>
 
 <template>
-     <section class="relative flex min-h-0 max-w-[820px] flex-col px-4 pb-8">
+     <section class="content-shell-narrow relative flex min-h-0 flex-col pb-8">
           <div
-               class="font-jetbrains-mono color-animate relative z-10 mt-20 min-h-[90px] text-7xl leading-tight font-bold transition-colors">
+               class="font-jetbrains-mono color-animate relative z-10 mt-20 min-h-[90px] text-5xl leading-tight font-bold transition-colors sm:text-6xl md:text-7xl">
                <span
                     class="underline-animate color-animate pb-4 transition-colors"
                     :style="{

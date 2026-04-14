@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\Post;
 use Carbon\Carbon;
+use DateTimeInterface;
 use Illuminate\Console\Attributes\Description;
 use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\Command;
@@ -30,7 +31,8 @@ class BlogSync extends Command
                 ->replace('\\', '/')
                 ->toString();
 
-            $document = YamlFrontMatter::parseFile($path);
+            $contents = File::get($path);
+            $document = YamlFrontMatter::parse($this->stripUtf8Bom($contents));
             $matter = $document->matter();
             $filename = pathinfo($path, PATHINFO_FILENAME);
 
@@ -51,6 +53,7 @@ class BlogSync extends Command
                 ['slug' => $slug],
                 [
                     'title' => (string) ($matter['title'] ?? Str::headline($filename)),
+                    'icon' => $this->normalizeIcon($matter['icon'] ?? null),
                     'excerpt' => $this->normalizeExcerpt($matter['excerpt'] ?? null),
                     'body' => trim($document->body()),
                     'tags' => $tags === [] ? null : $tags,
@@ -110,10 +113,36 @@ class BlogSync extends Command
         return $value === '' ? null : $value;
     }
 
+    private function normalizeIcon(mixed $icon): ?string
+    {
+        if (! is_string($icon)) {
+            return null;
+        }
+
+        $value = Str::of($icon)->trim()->slug('-')->toString();
+
+        return $value === '' ? null : $value;
+    }
+
+    private function stripUtf8Bom(string $contents): string
+    {
+        return str_starts_with($contents, "\xEF\xBB\xBF")
+            ? substr($contents, 3)
+            : $contents;
+    }
+
     private function parsePublishedAt(mixed $publishedAt, string $relativePath): ?Carbon
     {
         if ($publishedAt === null || $publishedAt === '') {
             return null;
+        }
+
+        if ($publishedAt instanceof DateTimeInterface) {
+            return Carbon::instance($publishedAt);
+        }
+
+        if (is_int($publishedAt) || is_float($publishedAt)) {
+            return Carbon::createFromTimestamp((int) $publishedAt);
         }
 
         if (! is_string($publishedAt)) {

@@ -16,11 +16,13 @@ class ShowController extends Controller
             ->where('slug', $slug)
             ->firstOrFail();
 
-        return Inertia::render('blog/Show', [
+        return Inertia::render('blog/show', [
             'post' => [
                 'title' => $post->title,
                 'slug' => $post->slug,
+                'icon' => $post->icon,
                 'excerpt' => $post->excerpt,
+                'rendered_excerpt' => $post->rendered_excerpt,
                 'tags' => $post->tags ?? [],
                 'published_at' => $post->published_at?->toDateString(),
                 'rendered_body' => $post->rendered_body,

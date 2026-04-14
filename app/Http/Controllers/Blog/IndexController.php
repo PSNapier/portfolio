@@ -27,6 +27,7 @@ class IndexController extends Controller
                 return [
                     'title' => $post->title,
                     'slug' => $post->slug,
+                    'icon' => $post->icon,
                     'excerpt' => $post->excerpt,
                     'tags' => $post->tags ?? [],
                     'published_at' => $post->published_at?->toDateString(),
@@ -47,7 +48,7 @@ class IndexController extends Controller
             ->sort()
             ->values();
 
-        return Inertia::render('blog/Index', [
+        return Inertia::render('blog/index', [
             'posts' => $posts,
             'filters' => [
                 'search' => $search,

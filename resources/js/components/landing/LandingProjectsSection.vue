@@ -15,7 +15,7 @@ defineProps<{
      <section
           id="projects"
           aria-label="Projects"
-          class="mx-auto mt-10 w-full max-w-4xl scroll-mt-8 space-y-16 px-4">
+          class="content-shell-wide mt-10 scroll-mt-8 space-y-16">
           <LandingProjectCard
                v-for="(project, idx) in projects"
                :key="idx"

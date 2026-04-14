@@ -1,6 +1,14 @@
 <script setup lang="ts">
-import { MoonIcon, NewspaperIcon, SunIcon } from '@heroicons/vue/24/outline';
-import { IconBrandGithub } from '@tabler/icons-vue';
+import {
+     Bars3Icon,
+     MoonIcon,
+     NewspaperIcon,
+     SunIcon,
+     XMarkIcon,
+} from '@heroicons/vue/24/outline';
+import { Link } from '@inertiajs/vue3';
+import { IconBrandGithub, IconLayoutGrid } from '@tabler/icons-vue';
+import { onBeforeUnmount, onMounted, ref } from 'vue';
 
 defineProps<{
      isDark: boolean;
@@ -13,11 +21,171 @@ const emit = defineEmits<{
      toggleTheme: [];
      selectColor: [color: string];
 }>();
+
+const isLandingRoute = route().current('landing');
+const isBlogIndexRoute = route().current('blog.index');
+const isMobileMenuOpen = ref(false);
+const mobileMenuRoot = ref<HTMLElement | null>(null);
+
+function closeMobileMenu() {
+     isMobileMenuOpen.value = false;
+}
+
+function toggleMobileMenu() {
+     isMobileMenuOpen.value = !isMobileMenuOpen.value;
+}
+
+function handlePointerDown(event: PointerEvent) {
+     if (!isMobileMenuOpen.value || !mobileMenuRoot.value) {
+          return;
+     }
+
+     const target = event.target;
+     if (!(target instanceof Node)) {
+          return;
+     }
+
+     if (!mobileMenuRoot.value.contains(target)) {
+          closeMobileMenu();
+     }
+}
+
+function handleKeyDown(event: KeyboardEvent) {
+     if (event.key === 'Escape') {
+          closeMobileMenu();
+     }
+}
+
+onMounted(() => {
+     window.addEventListener('pointerdown', handlePointerDown);
+     window.addEventListener('keydown', handleKeyDown);
+});
+
+onBeforeUnmount(() => {
+     window.removeEventListener('pointerdown', handlePointerDown);
+     window.removeEventListener('keydown', handleKeyDown);
+});
 </script>
 
 <template>
      <div
-          class="fixed top-3 left-3 z-30 transition-[opacity,transform] duration-200 sm:top-6 sm:left-8"
+          ref="mobileMenuRoot"
+          class="fixed inset-x-0 top-0 z-30 sm:hidden"
+          :inert="opacity < 0.02"
+          :style="{
+               opacity,
+               pointerEvents: opacity < 0.02 ? 'none' : 'auto',
+          }"
+          :aria-hidden="opacity < 0.02">
+          <div
+               class="w-full px-3 pt-3 pb-2 shadow-lg transition-[background-color,border-radius] duration-[var(--motion-duration-micro)] ease-[var(--motion-ease-micro)]"
+               :style="{ backgroundColor: selectedColor }">
+               <button
+                    type="button"
+                    class="ml-auto flex h-9 w-9 items-center justify-center rounded-lg transition-transform duration-[var(--motion-duration-micro)] ease-[var(--motion-ease-micro)] hover:scale-105 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
+                    :class="
+                         isDark
+                              ? 'text-neutral-900 focus-visible:ring-neutral-900'
+                              : 'text-neutral-50 focus-visible:ring-neutral-50'
+                    "
+                    :aria-expanded="isMobileMenuOpen"
+                    aria-controls="mobile-top-controls-menu"
+                    aria-label="Toggle navigation menu"
+                    @click="toggleMobileMenu">
+                    <component
+                         :is="isMobileMenuOpen ? XMarkIcon : Bars3Icon"
+                         class="h-6 w-6" />
+               </button>
+
+               <div
+                    v-if="isMobileMenuOpen"
+                    id="mobile-top-controls-menu"
+                    class="mt-3 flex min-w-[12rem] flex-col items-end gap-3 pb-2 text-right">
+                    <Link
+                         :href="route('landing')"
+                         class="font-jetbrains-mono inline-flex items-center gap-2 text-lg font-medium decoration-transparent decoration-1 underline-offset-4 transition-[text-decoration-color,transform,opacity] duration-[var(--motion-duration-micro)] ease-[var(--motion-ease-micro)] hover:scale-105 hover:underline hover:decoration-current focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
+                         :class="[
+                              isDark
+                                   ? 'text-neutral-900 focus-visible:ring-neutral-900'
+                                   : 'text-neutral-50 focus-visible:ring-neutral-50',
+                              isLandingRoute
+                                   ? 'opacity-60 hover:scale-100 hover:no-underline'
+                                   : '',
+                         ]"
+                         @click="closeMobileMenu">
+                         <IconLayoutGrid
+                              class="h-4 w-4"
+                              aria-hidden="true" />
+                         Portfolio
+                    </Link>
+                    <Link
+                         :href="route('blog.index')"
+                         class="font-jetbrains-mono inline-flex items-center gap-2 text-lg font-medium decoration-transparent decoration-1 underline-offset-4 transition-[text-decoration-color,transform,opacity] duration-[var(--motion-duration-micro)] ease-[var(--motion-ease-micro)] hover:scale-105 hover:underline hover:decoration-current focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
+                         :class="[
+                              isDark
+                                   ? 'text-neutral-900 focus-visible:ring-neutral-900'
+                                   : 'text-neutral-50 focus-visible:ring-neutral-50',
+                              isBlogIndexRoute
+                                   ? 'opacity-60 hover:scale-100 hover:no-underline'
+                                   : '',
+                         ]"
+                         @click="closeMobileMenu">
+                         <NewspaperIcon
+                              class="h-4 w-4"
+                              aria-hidden="true" />
+                         Blog
+                    </Link>
+                    <a
+                         href="https://github.com/PSNapier"
+                         target="_blank"
+                         rel="noreferrer noopener"
+                         class="font-jetbrains-mono inline-flex items-center gap-2 text-lg font-medium decoration-transparent decoration-1 underline-offset-4 transition-[text-decoration-color,transform] duration-[var(--motion-duration-micro)] ease-[var(--motion-ease-micro)] hover:scale-105 hover:underline hover:decoration-current focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
+                         :class="
+                              isDark
+                                   ? 'text-neutral-900 focus-visible:ring-neutral-900'
+                                   : 'text-neutral-50 focus-visible:ring-neutral-50'
+                         "
+                         @click="closeMobileMenu">
+                         <IconBrandGithub
+                              class="h-4 w-4"
+                              aria-hidden="true" />
+                         GitHub
+                    </a>
+
+                    <div
+                         class="mt-1 flex items-center gap-2 rounded-full px-2 py-1 transition-colors duration-[var(--motion-duration-micro)] ease-[var(--motion-ease-micro)]"
+                         :class="
+                              isDark ? 'bg-neutral-900/85' : 'bg-white/90'
+                         ">
+                         <button
+                              v-for="(color, idx) in colors"
+                              :key="idx"
+                              type="button"
+                              :style="{ backgroundColor: color }"
+                              class="h-4 w-4 cursor-pointer rounded-full transition-transform duration-[var(--motion-duration-micro)] ease-[var(--motion-ease-micro)] hover:scale-125 focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-1 focus-visible:outline-none"
+                              :aria-label="`Select accent color ${idx + 1}`"
+                              @click="emit('selectColor', color)" />
+                         <button
+                              type="button"
+                              class="ml-1 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-transparent transition-transform duration-[var(--motion-duration-micro)] ease-[var(--motion-ease-micro)] hover:scale-110 focus-visible:ring-2 focus-visible:ring-[var(--accent-color)] focus-visible:ring-offset-2 focus-visible:outline-none"
+                              :aria-label="
+                                   isDark
+                                        ? 'Switch to light mode'
+                                        : 'Switch to dark mode'
+                              "
+                              @click="emit('toggleTheme')">
+                              <component
+                                   :is="isDark ? SunIcon : MoonIcon"
+                                   class="h-5 w-5"
+                                   :style="{ color: selectedColor }" />
+                         </button>
+                    </div>
+               </div>
+          </div>
+     </div>
+
+     <div
+          class="fixed top-3 left-3 z-30 hidden transition-[opacity,transform] duration-[var(--motion-duration-micro)] ease-[var(--motion-ease-micro)] sm:top-6 sm:left-8 sm:block"
           :inert="opacity < 0.02"
           :style="{
                opacity,
@@ -25,31 +193,54 @@ const emit = defineEmits<{
           }"
           :aria-hidden="opacity < 0.02">
           <div class="flex items-center gap-4">
+               <Link
+                    :href="route('landing')"
+                    class="font-jetbrains-mono color-animate inline-flex items-center gap-1 text-sm font-semibold decoration-transparent decoration-1 underline-offset-4 transition-[color,text-decoration-color,transform] duration-[var(--motion-duration-micro)] ease-[var(--motion-ease-micro)] hover:scale-105 hover:underline hover:decoration-current focus-visible:ring-2 focus-visible:ring-[var(--accent-color)] focus-visible:ring-offset-2 focus-visible:outline-none"
+                    :class="
+                         isLandingRoute
+                              ? 'text-neutral-500 hover:scale-100 hover:no-underline dark:text-neutral-400'
+                              : ''
+                    "
+                    :style="
+                         isLandingRoute ? undefined : { color: selectedColor }
+                    ">
+                    <IconLayoutGrid
+                         class="h-4 w-4"
+                         aria-hidden="true" />
+                    Portfolio
+               </Link>
+               <Link
+                    :href="route('blog.index')"
+                    class="font-jetbrains-mono color-animate inline-flex items-center gap-1 text-sm font-semibold decoration-transparent decoration-1 underline-offset-4 transition-[color,text-decoration-color,transform] duration-[var(--motion-duration-micro)] ease-[var(--motion-ease-micro)] hover:scale-105 hover:underline hover:decoration-current focus-visible:ring-2 focus-visible:ring-[var(--accent-color)] focus-visible:ring-offset-2 focus-visible:outline-none"
+                    :class="
+                         isBlogIndexRoute
+                              ? 'text-neutral-500 hover:scale-100 hover:no-underline dark:text-neutral-400'
+                              : ''
+                    "
+                    :style="
+                         isBlogIndexRoute ? undefined : { color: selectedColor }
+                    ">
+                    <NewspaperIcon
+                         class="h-4 w-4"
+                         aria-hidden="true" />
+                    Blog
+               </Link>
                <a
                     href="https://github.com/PSNapier"
                     target="_blank"
                     rel="noreferrer noopener"
-                    class="font-jetbrains-mono color-animate inline-flex items-center gap-1 text-sm font-semibold decoration-transparent decoration-1 underline-offset-4 transition-[color,text-decoration-color,transform] duration-200 hover:scale-105 hover:underline hover:decoration-current"
+                    class="font-jetbrains-mono color-animate inline-flex items-center gap-1 text-sm font-semibold decoration-transparent decoration-1 underline-offset-4 transition-[color,text-decoration-color,transform] duration-[var(--motion-duration-micro)] ease-[var(--motion-ease-micro)] hover:scale-105 hover:underline hover:decoration-current focus-visible:ring-2 focus-visible:ring-[var(--accent-color)] focus-visible:ring-offset-2 focus-visible:outline-none"
                     :style="{ color: selectedColor }">
                     <IconBrandGithub
                          class="h-4 w-4"
                          aria-hidden="true" />
                     GitHub
                </a>
-               <a
-                    :href="route('blog.index')"
-                    class="font-jetbrains-mono color-animate inline-flex items-center gap-1 text-sm font-semibold decoration-transparent decoration-1 underline-offset-4 transition-[color,text-decoration-color,transform] duration-200 hover:scale-105 hover:underline hover:decoration-current"
-                    :style="{ color: selectedColor }">
-                    <NewspaperIcon
-                         class="h-4 w-4"
-                         aria-hidden="true" />
-                    Blog
-               </a>
           </div>
      </div>
 
      <div
-          class="fixed top-3 right-3 z-30 flex items-center gap-2 transition-[opacity,transform] duration-200 sm:top-6 sm:right-8 sm:gap-3"
+          class="fixed top-3 right-3 z-30 hidden items-center gap-2 transition-[opacity,transform] duration-[var(--motion-duration-micro)] ease-[var(--motion-ease-micro)] sm:top-6 sm:right-8 sm:flex sm:gap-3"
           :inert="opacity < 0.02"
           :style="{
                opacity,
@@ -60,10 +251,10 @@ const emit = defineEmits<{
                v-for="(color, idx) in colors"
                :key="idx"
                :style="{ backgroundColor: color }"
-               class="h-4 w-4 cursor-pointer rounded-full transition-transform duration-200 hover:scale-125"
+               class="h-4 w-4 cursor-pointer rounded-full transition-transform duration-[var(--motion-duration-micro)] ease-[var(--motion-ease-micro)] hover:scale-125"
                @click="emit('selectColor', color)" />
           <button
-               class="ml-2 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full transition-colors transition-transform duration-200 hover:scale-125 sm:ml-4 dark:border-neutral-700"
+               class="ml-2 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full transition-colors transition-transform duration-[var(--motion-duration-micro)] ease-[var(--motion-ease-micro)] hover:scale-125 focus-visible:ring-2 focus-visible:ring-[var(--accent-color)] focus-visible:ring-offset-2 focus-visible:outline-none sm:ml-4 dark:border-neutral-700"
                :class="
                     isDark ? 'bg-neutral-50' : 'bg-white dark:bg-neutral-800'
                "

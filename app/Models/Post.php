@@ -11,6 +11,7 @@ class Post extends Model
     protected $fillable = [
         'title',
         'slug',
+        'icon',
         'excerpt',
         'body',
         'tags',
@@ -71,6 +72,28 @@ class Post extends Model
 
     public function getRenderedBodyAttribute(): string
     {
+        return (string) self::markdownConverter()->convert((string) $this->body);
+    }
+
+    public function getRenderedExcerptAttribute(): ?string
+    {
+        $raw = $this->excerpt;
+
+        if ($raw === null || trim((string) $raw) === '') {
+            return null;
+        }
+
+        $html = (string) self::markdownConverter()->convert((string) $raw);
+
+        if (preg_match('/\A<p>(.*)<\/p>\s*\z/s', $html, $matches)) {
+            return $matches[1];
+        }
+
+        return $html;
+    }
+
+    private static function markdownConverter(): CommonMarkConverter
+    {
         static $converter;
 
         $converter ??= new CommonMarkConverter([
@@ -78,6 +101,6 @@ class Post extends Model
             'allow_unsafe_links' => false,
         ]);
 
-        return (string) $converter->convert((string) $this->body);
+        return $converter;
     }
 }

@@ -12,7 +12,7 @@ defineProps<{
                backgroundColor: selectedColor,
                color: isDark ? '#171717' : '#fafafa',
           }">
-          <div class="mx-auto w-full max-w-[820px] px-4 py-16 text-center">
+          <div class="content-shell-narrow py-16 text-center">
                <h2
                     class="font-jetbrains-mono color-animate mb-2 text-3xl font-bold transition-colors">
                     Contact Me
