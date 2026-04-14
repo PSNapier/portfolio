@@ -106,8 +106,9 @@ function getTechIcon(tech: string) {
 </template>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+@import '@fontsource/jetbrains-mono';
+@import '@fontsource/inter/400.css';
+@import '@fontsource/inter/700.css';
 
 .font-jetbrains-mono {
      font-family: 'JetBrains Mono', monospace;

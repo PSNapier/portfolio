@@ -23,6 +23,8 @@
           "vue-tsc": "^2.2.4"
      },
      "dependencies": {
+          "@fontsource/inter": "^5.2.8",
+          "@fontsource/jetbrains-mono": "^5.2.8",
           "@heroicons/vue": "^2.2.0",
           "@inertiajs/vue3": "^2.0.0",
           "@tabler/icons-vue": "^3.41.1",
