@@ -1,5 +1,17 @@
 <script setup lang="ts">
-import { MoonIcon, SunIcon } from '@heroicons/vue/24/outline';
+import {
+     ArrowDownIcon,
+     ArrowTopRightOnSquareIcon,
+     BookOpenIcon,
+     CodeBracketIcon,
+     CommandLineIcon,
+     CubeTransparentIcon,
+     MoonIcon,
+     NewspaperIcon,
+     ServerStackIcon,
+     SunIcon,
+     SwatchIcon,
+} from '@heroicons/vue/24/outline';
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
 
 interface ProjectExtraImage {
@@ -141,6 +153,23 @@ const projects: Project[] = [
                'Tool that turns typed text into a digit string using a fixed letter-to-digit table, with an optional step that strips duplicate digits. The canvas places digits 0–9 on a circle and draws line segments in order so the path reads like a classic sigil construction.',
      },
 ];
+
+const techIconMap = {
+     javascript: CommandLineIcon,
+     php: CodeBracketIcon,
+     html: CodeBracketIcon,
+     css: SwatchIcon,
+     tailwind: SwatchIcon,
+     canvas: SwatchIcon,
+     vue: CubeTransparentIcon,
+     laravel: ServerStackIcon,
+     blade: CodeBracketIcon,
+     lorekeeper: BookOpenIcon,
+} as const;
+
+function getTechIcon(tech: string) {
+     return techIconMap[tech.toLowerCase() as keyof typeof techIconMap] ?? null;
+}
 </script>
 
 <template class="bg-neutral-50">
@@ -150,7 +179,30 @@ const projects: Project[] = [
                isDark
                     ? 'bg-neutral-900 text-neutral-50'
                     : 'bg-neutral-50 text-neutral-900',
-          ]">
+          ]"
+          :style="{
+               '--selection-bg': selectedColor,
+               '--selection-fg': '#171717',
+          }">
+          <div
+               class="fixed top-3 left-3 z-30 transition-[opacity,transform] duration-200 sm:top-6 sm:left-8"
+               :inert="scrollFadeOpacity < 0.02"
+               :style="{
+                    opacity: scrollFadeOpacity,
+                    pointerEvents: scrollFadeOpacity < 0.02 ? 'none' : 'auto',
+               }"
+               :aria-hidden="scrollFadeOpacity < 0.02">
+               <a
+                    href="#"
+                    class="font-jetbrains-mono color-animate inline-flex items-center gap-1 text-sm font-semibold decoration-1 underline-offset-4 decoration-transparent transition-[color,text-decoration-color,transform] duration-200 hover:scale-105 hover:underline hover:decoration-current"
+                    :style="{ color: selectedColor }">
+                    <NewspaperIcon
+                         class="h-4 w-4"
+                         aria-hidden="true" />
+                    Blog (coming soon!)
+               </a>
+          </div>
+
           <div
                class="fixed top-3 right-3 z-30 flex items-center gap-2 transition-[opacity,transform] duration-200 sm:top-6 sm:right-8 sm:gap-3"
                :inert="scrollFadeOpacity < 0.02"
@@ -257,9 +309,21 @@ const projects: Project[] = [
                          communication, stable architecture, and keeping things
                          maintainable long-term.
                     </p>
+                    <p>My workflow is structured but flexible.</p>
+                    <p
+                         class="font-jetbrains-mono color-animate my-6 flex flex-col items-center text-center text-xl font-bold tracking-[0.04em] transition-colors md:my-8 md:text-2xl"
+                         :class="
+                              isDark ? 'text-neutral-200' : 'text-neutral-800'
+                         ">
+                         <span>Define the system</span>
+                         <ArrowDownIcon
+                              class="my-1 h-4 w-4 stroke-[2.5] md:my-2" />
+                         <span>Build in iterative sessions</span>
+                         <ArrowDownIcon
+                              class="my-1 h-4 w-4 stroke-[2.5] md:my-2" />
+                         <span>Refine as we go.</span>
+                    </p>
                     <p>
-                         My workflow is structured but flexible: define the
-                         system → build in iterative sessions → refine as we go.
                          You’ll always know what’s happening, what’s done, and
                          what’s next with working implementations delivered
                          early.
@@ -323,7 +387,12 @@ const projects: Project[] = [
                               <span
                                    v-for="(tech, tIdx) in project.stack"
                                    :key="tIdx"
-                                   class="color-animate rounded bg-neutral-200 px-2 py-1 font-mono text-xs text-neutral-700 transition-colors transition-transform hover:scale-105">
+                                   class="color-animate inline-flex items-center gap-1 rounded bg-neutral-200 px-2 py-1 font-mono text-xs text-neutral-700 transition-colors transition-transform hover:scale-105">
+                                   <component
+                                        :is="getTechIcon(tech)"
+                                        v-if="getTechIcon(tech)"
+                                        class="h-3.5 w-3.5 shrink-0"
+                                        aria-hidden="true" />
                                    {{ tech }}
                               </span>
                          </div>
@@ -375,14 +444,17 @@ const projects: Project[] = [
                                    :href="project.link"
                                    target="_blank"
                                    rel="noopener"
-                                   class="color-animate inline-block text-sm font-semibold underline underline-offset-4 transition transition-colors hover:scale-105"
+                                   class="font-jetbrains-mono color-animate inline-flex items-center gap-1 text-sm font-semibold decoration-1 underline-offset-4 decoration-transparent transition-[color,text-decoration-color,transform] duration-200 hover:scale-105 hover:underline hover:decoration-current"
                                    :style="{ color: selectedColor }">
-                                   View Project &rarr;
+                                   <span>View Project</span>
+                                   <ArrowTopRightOnSquareIcon
+                                        class="h-4 w-4"
+                                        aria-hidden="true" />
                               </a>
                          </div>
                          <p
                               v-else-if="project.link === '#'"
-                              class="color-animate mt-2 text-sm font-semibold"
+                              class="font-jetbrains-mono color-animate mt-2 text-sm font-semibold"
                               :class="
                                    isDark
                                         ? 'text-neutral-400'
@@ -467,5 +539,15 @@ const projects: Project[] = [
           color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
           opacity 0.2s ease,
           transform 0.2s ease;
+}
+
+::selection {
+     background: var(--selection-bg, #3b82f6);
+     color: var(--selection-fg, #171717);
+}
+
+::-moz-selection {
+     background: var(--selection-bg, #3b82f6);
+     color: var(--selection-fg, #171717);
 }
 </style>
