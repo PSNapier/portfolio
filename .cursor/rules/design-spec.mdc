@@ -2,21 +2,4 @@
 alwaysApply: true
 ---
 
-Site design spec (apply to landing, blog, and future pages):
-
-- Layout: clean single-column reading flow by default; add multi-column only when content density requires it (e.g., blog index cards + sidebar).
-- Theme: neutral base palette anchored by charcoal `#2F3030` with dark/light support across all pages; keep background/text transitions smooth (`300ms`).
-- Accent system: canonical accent palette is cyan `#1ECFE6`, green `#32C36A`, gold `#EBC166`, pink `#F73676`, and purple `#A362A4`; one active palette color per context drives links, highlights, controls, and text selection (`--selection-bg`, `--accent-color`).
-- Theme bar: preserve palette picker behavior and visual parity across pages; new UI should consume these exact theme-bar palette values instead of introducing ad-hoc accent colors.
-- Top controls persistence: `resources/js/components/landing/LandingTopControls.vue` is global cross-page control surface; keep it present and behaviorally consistent across landing, blog index, and blog post pages.
-- Footer persistence: `resources/js/components/landing/LandingFooter.vue` should render consistently on landing and blog pages to keep global page framing aligned.
-- Typography: Inter for body/UI and most headings; JetBrains Mono for code/metadata/technical labels, plus intentional brand-forward hero headlines or short subheads on marketing pages.
-- Spacing rhythm: consistent vertical cadence between sections/blocks; use shared layout tokens/classes in `resources/css/app.css` (`--layout-content-padding-x`, `--layout-content-max-narrow`, `--layout-content-max-wide`, `.content-shell-narrow`, `.content-shell-wide`) instead of hardcoded page-level wrapper padding/max-width.
-- Motion: use shared CSS motion tokens from `resources/css/app.css` (`--motion-duration-color`, `--motion-duration-micro`, `--motion-ease-standard`, `--motion-ease-micro`) instead of hardcoded transition values.
-- Accessibility: maintain strong contrast, visible focus states, semantic heading order, and keyboard-usable controls/navigation.
-- Content UX:
-     - Landing pages prioritize scanability, clear CTA hierarchy, and section storytelling.
-     - Blog pages prioritize readability (comfortable measure/line-height), clear metadata, and predictable navigation between index and post detail.
-- Component boundary: page files orchestrate structure/data; reusable section/components own visual implementation; avoid duplicating style logic across pages.
-
-When editing UI, keep these constraints unless user explicitly requests a redesign.
+Site design and Tailwind rules for landing, blog, and future pages: `docs/tailwind-style-contract.md`. Follow that document for layout, theme, global chrome, typography, motion, a11y, and CSS vs template boundaries unless the user explicitly requests a redesign.

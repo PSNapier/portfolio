@@ -95,7 +95,7 @@ defineProps<{
                               :alt="img.alt"
                               class="h-full w-full object-cover object-top" />
                          <div
-                              class="pointer-events-none absolute inset-0 flex items-center justify-center bg-black/60 opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100">
+                             class="pointer-events-none absolute inset-0 flex items-center justify-center bg-black/60 opacity-0 transition-opacity duration-[var(--motion-duration-micro)] ease-[var(--motion-ease-micro)] group-hover:opacity-100 group-focus-visible:opacity-100">
                               <span
                                    class="px-3 text-center text-sm font-semibold text-white drop-shadow-md">
                                    Open in new tab
@@ -110,7 +110,7 @@ defineProps<{
                          :href="project.link"
                          target="_blank"
                          rel="noopener"
-                         class="font-jetbrains-mono color-animate inline-flex items-center gap-1 text-sm font-semibold decoration-transparent decoration-1 underline-offset-4 transition-[color,text-decoration-color,transform] duration-200 hover:scale-105 hover:underline hover:decoration-current"
+                         class="font-jetbrains-mono color-animate inline-flex items-center gap-1 text-sm font-semibold decoration-transparent decoration-1 underline-offset-4 transition-[color,text-decoration-color,transform] duration-[var(--motion-duration-micro)] ease-[var(--motion-ease-micro)] hover:scale-105 hover:underline hover:decoration-current"
                          :style="{ color: selectedColor }">
                          <span>View Project</span>
                          <ArrowTopRightOnSquareIcon

@@ -17,15 +17,11 @@ import { useLandingTheme } from '../composables/useLandingTheme';
 import { useScrollFade } from '../composables/useScrollFade';
 import { projects } from './landing/projects';
 
-const { isDark, selectedColor, colors } = useLandingTheme();
+const { isDark, selectedColor, colors, toggleTheme } = useLandingTheme();
 const { scrollFadeOpacity } = useScrollFade();
 
 function setSelectedColor(color: string) {
      selectedColor.value = color;
-}
-
-function toggleTheme() {
-     isDark.value = !isDark.value;
 }
 
 function scrollToProjects() {
@@ -61,7 +57,7 @@ function getTechIcon(tech: string) {
 }
 </script>
 
-<template class="bg-neutral-50">
+<template>
      <main
           :class="[
                'flex w-full min-h-screen cursor-default flex-col items-center overflow-x-hidden pb-24 transition-colors duration-300',
@@ -105,56 +101,3 @@ function getTechIcon(tech: string) {
           <LandingFooter />
      </main>
 </template>
-
-<style>
-@import '@fontsource/jetbrains-mono';
-@import '@fontsource/inter/400.css';
-@import '@fontsource/inter/700.css';
-
-.font-jetbrains-mono {
-     font-family: 'JetBrains Mono', monospace;
-}
-.font-inter {
-     font-family: 'Inter', sans-serif;
-}
-
-.underline-animate {
-     position: relative;
-     display: inline-block;
-}
-.underline-animate::after {
-     content: '';
-     position: absolute;
-     left: 0;
-     bottom: 0.1em;
-     width: 100%;
-     height: 0.07em;
-     background: var(--accent-color, #1ECFE6);
-    border-radius: 4px;
-     transition: background 0.3s;
-     z-index: -1;
-}
-
-.color-animate {
-     transition: color var(--motion-duration-color) var(--motion-ease-standard);
-}
-
-/* Use shared motion tokens for consistency across pages/components. */
-.examples-cta {
-     transition:
-          background-color var(--motion-duration-color) var(--motion-ease-standard),
-          color var(--motion-duration-color) var(--motion-ease-standard),
-          opacity var(--motion-duration-micro) var(--motion-ease-micro),
-          transform var(--motion-duration-micro) var(--motion-ease-micro);
-}
-
-::selection {
-     background: var(--selection-bg, #1ECFE6);
-     color: var(--selection-fg, #171717);
-}
-
-::-moz-selection {
-     background: var(--selection-bg, #1ECFE6);
-     color: var(--selection-fg, #171717);
-}
-</style>

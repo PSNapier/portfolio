@@ -43,6 +43,21 @@ const getStoredAppearance = () => {
     return localStorage.getItem('appearance') as Appearance | null;
 };
 
+/** Whether the app renders as dark, matching `updateTheme` (system → prefers-color-scheme). */
+export function getResolvedIsDark(): boolean {
+    if (typeof window === 'undefined') {
+        return false;
+    }
+
+    const value = getStoredAppearance() || 'system';
+
+    if (value === 'system') {
+        return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+
+    return value === 'dark';
+}
+
 const handleSystemThemeChange = () => {
     const currentAppearance = getStoredAppearance();
 

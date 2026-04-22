@@ -1,4 +1,5 @@
 import { ref, watch } from 'vue';
+import { getResolvedIsDark, useAppearance } from './useAppearance';
 
 // Canonical accent palette — see .cursor/rules/design-spec.mdc
 // Order is intentional (cyan, green, gold, pink, purple) and index-aligned
@@ -20,21 +21,33 @@ const colorsSoft = [
 ];
 
 export function useLandingTheme() {
-     const isDark = ref(false);
+     const { updateAppearance } = useAppearance();
+
+     const isDark = ref(getResolvedIsDark());
      const selectedColor = ref(colorsVivid[0]);
      const colors = ref<string[]>(colorsVivid);
 
-     watch(isDark, (value) => {
-          const prevColors = value ? colorsVivid : colorsSoft;
-          const newColors = value ? colorsSoft : colorsVivid;
-          const idx = prevColors.indexOf(selectedColor.value);
-          colors.value = newColors;
-          selectedColor.value = newColors[idx >= 0 ? idx : 0];
-     });
+     function toggleTheme() {
+          isDark.value = !isDark.value;
+          updateAppearance(isDark.value ? 'dark' : 'light');
+     }
+
+     watch(
+          isDark,
+          (value) => {
+               const prevColors = value ? colorsVivid : colorsSoft;
+               const newColors = value ? colorsSoft : colorsVivid;
+               const idx = prevColors.indexOf(selectedColor.value);
+               colors.value = newColors;
+               selectedColor.value = newColors[idx >= 0 ? idx : 0];
+          },
+          { immediate: true },
+     );
 
      return {
           isDark,
           selectedColor,
           colors,
+          toggleTheme,
      };
 }

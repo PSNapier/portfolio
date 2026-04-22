@@ -13,15 +13,11 @@ withDefaults(
     }
 );
 
-const { isDark, selectedColor, colors } = useLandingTheme();
+const { isDark, selectedColor, colors, toggleTheme } = useLandingTheme();
 const { scrollFadeOpacity } = useScrollFade();
 
 function setSelectedColor(color: string) {
     selectedColor.value = color;
-}
-
-function toggleTheme() {
-    isDark.value = !isDark.value;
 }
 </script>
 
@@ -53,15 +49,3 @@ function toggleTheme() {
         <LandingFooter />
     </main>
 </template>
-
-<style>
-::selection {
-    background: var(--selection-bg, #1ECFE6);
-    color: var(--selection-fg, #171717);
-}
-
-::-moz-selection {
-    background: var(--selection-bg, #1ECFE6);
-    color: var(--selection-fg, #171717);
-}
-</style>

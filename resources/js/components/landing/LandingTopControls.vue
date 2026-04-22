@@ -192,7 +192,7 @@ onBeforeUnmount(() => {
                pointerEvents: opacity < 0.02 ? 'none' : 'auto',
           }"
           :aria-hidden="opacity < 0.02">
-          <div class="flex items-center gap-4">
+          <nav class="flex h-8 items-end gap-4 pb-2">
                <Link
                     :href="route('landing')"
                     class="font-jetbrains-mono color-animate inline-flex items-center gap-1 text-sm font-semibold decoration-transparent decoration-1 underline-offset-4 transition-[color,text-decoration-color,transform] duration-[var(--motion-duration-micro)] ease-[var(--motion-ease-micro)] hover:scale-105 hover:underline hover:decoration-current focus-visible:ring-2 focus-visible:ring-[var(--accent-color)] focus-visible:ring-offset-2 focus-visible:outline-none"
@@ -236,7 +236,7 @@ onBeforeUnmount(() => {
                          aria-hidden="true" />
                     GitHub
                </a>
-          </div>
+          </nav>
      </div>
 
      <div
