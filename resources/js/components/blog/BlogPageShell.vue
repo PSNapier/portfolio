@@ -42,7 +42,7 @@ function setSelectedColor(color: string) {
             @select-color="setSelectedColor"
             @toggle-theme="toggleTheme" />
 
-        <section :class="[shellClass, 'pt-24 pb-12 sm:pt-28']">
+        <section :class="[shellClass, 'pt-20 pb-12 sm:pt-24']">
             <slot :selected-color="selectedColor" :is-dark="isDark" />
         </section>
 

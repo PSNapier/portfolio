@@ -17,7 +17,7 @@ defineProps<{
           <div
                class="font-jetbrains-mono color-animate relative z-10 mt-20 min-h-[90px] text-5xl leading-tight font-bold transition-colors sm:text-6xl md:text-7xl">
                <span
-                    class="underline-animate color-animate pb-4 transition-colors"
+                    class="underline-animate color-animate pb-2 transition-colors"
                     :style="{
                          '--accent-color': selectedColor,
                          color: selectedColor,
@@ -26,7 +26,7 @@ defineProps<{
                </span>
           </div>
           <div
-               class="font-inter color-animate relative z-10 mt-4 max-w-none space-y-4 text-base leading-relaxed transition-colors md:text-lg"
+               class="font-inter color-animate relative z-10 mt-2 max-w-none space-y-4 text-base leading-relaxed transition-colors md:text-lg"
                :class="isDark ? 'text-neutral-200' : 'text-neutral-800'">
                <p
                     class="font-jetbrains-mono color-animate text-xl leading-snug font-bold transition-colors md:text-2xl">

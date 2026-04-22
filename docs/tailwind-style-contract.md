@@ -27,6 +27,10 @@ Applies to landing, blog, and future marketing pages. Product rules and stack ru
 
 - Use `resources/css/app.css` motion tokens: `--motion-duration-color`, `--motion-duration-micro`, `--motion-ease-standard`, `--motion-ease-micro` instead of hardcoded transition duration or easing on new work.
 
+## Shadows
+
+- Default to no drop shadows. Do not add `shadow-*` (or other drop-shadow effects) unless the user asks for them, or they are already part of an existing shared component.
+
 ## Accessibility
 
 - Strong contrast, visible focus states, sensible heading order, keyboard-usable controls and navigation.

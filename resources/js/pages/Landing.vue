@@ -60,7 +60,7 @@ function getTechIcon(tech: string) {
 <template>
      <main
           :class="[
-               'flex w-full min-h-screen cursor-default flex-col items-center overflow-x-hidden pb-24 transition-colors duration-300',
+               'flex min-h-screen w-full cursor-default flex-col items-center overflow-x-hidden pb-24 transition-colors duration-300',
                isDark
                     ? 'bg-neutral-900 text-neutral-50'
                     : 'bg-neutral-50 text-neutral-900',
@@ -82,7 +82,7 @@ function getTechIcon(tech: string) {
                :selected-color="selectedColor"
                :is-dark="isDark"
                :opacity="scrollFadeOpacity"
-               @scroll-to-projects="scrollToProjects" />
+               @navigate="scrollToProjects" />
 
           <LandingHeroSection
                :is-dark="isDark"

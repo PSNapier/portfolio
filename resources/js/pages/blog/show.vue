@@ -33,7 +33,7 @@ function formatDate(dateStr: string | null): string {
           shell-class="content-shell-narrow">
           <article>
                <h1
-                    class="font-jetbrains-mono color-animate mb-4 text-5xl leading-tight font-bold transition-colors md:text-7xl"
+                    class="font-jetbrains-mono color-animate mb-2 text-5xl leading-tight font-bold transition-colors md:text-7xl"
                     :style="{ color: 'var(--accent-color, #1ECFE6)' }">
                     <span class="underline-animate color-animate">
                          {{ post.title }}

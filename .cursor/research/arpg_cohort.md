@@ -4,43 +4,28 @@ _Updated: 2026-04-22_
 
 Scope note: this list prioritizes people with visible service/build signal in ARPG + Lorekeeper circles (especially DeviantArt-adjacent communities). Not everyone below explicitly posts open commission slots at all times.
 
-## Direct service providers (strongest "hire me" signal)
+## Cohort table (outreach + pricing)
 
-1. **nemesyzygy** — https://www.deviantart.com/nemesyzygy/journal/Lorekeeper-commissions-Organise-your-species-931975695  
-   - Explicit Lorekeeper setup/transfer/tech-support commission post.
-2. **itinerare (Mercury)** — https://www.itinerare.net/commissions/code  
-   - Explicit paid Lorekeeper extension + modification commissions.
-3. **Min (Min Layouts)** — https://minlayouts.carrd.co/  
-   - Lorekeeper layout/page recode services with examples and ToS.
-4. **Preimpression (Uri Hamman)** — https://preimpression.art/project/lorekeeper  
-   - ARPG Lorekeeper UI/customization portfolio with automation examples.
-5. **corowne (cy)** — https://www.deviantart.com/corowne/journal/Lorekeeper-Oekaki-Board-836005875  
-   - Lorekeeper creator; historical setup commission signal from release-era post.
+_Pricing cells: explicit text on the linked page as of **2026-04-22** (rates and “open/closed” can change). `n/a` = link is not a vendor storefront._
 
-## Ecosystem builders with strong delivery signal (good cohort comps)
-
-6. **ScuffedNewt (Newt)** — https://github.com/ScuffedNewt  
-   - Core Lorekeeper contributor; widely credited across live ARPG instances.
-7. **JuniJwi (Juni)** — https://github.com/junijwi  
-   - Core extension contributor (masterlist tooling, profile/status features).
-8. **Draginraptor** — https://www.kukuri-arpg.com/credits  
-   - Frequent credits on major LK sites (inventory/crafting/core systems).
-9. **SpeedyD (Speedy)** — https://github.com/lk-arpg/lorekeeper/releases  
-   - Repeated release/core feature contributor and image/watermark tooling.
-10. **moif** — https://aw0005.com/credits  
-    - Repeated credits across LK customizations and extension collaborations.
-11. **Cylunny** — https://terraliens.org/credits  
-    - Repeated extension credits (logs/dailies/template tooling/theme work).
-12. **CH3RVB** — https://www.ghoulhoods.com/credits  
-    - Repeated extension co-author credits across active Lorekeeper sites.
-13. **AnimatedCritter** — https://www.ghoulhoods.com/credits  
-    - Repeated staff/community extension credits on deployed ARPG instances.
-14. **MarskyMessier** — https://www.kukuri-arpg.com/credits  
-    - Prompt/form tooling credits in deployed LK communities.
-15. **Stokori** — https://www.kukuri-arpg.com/credits  
-    - Repeated extension credits in active ARPG site ecosystems.
-16. **Snupsplus** — https://aw0005.com/credits  
-    - Core extension credit presence in production ARPG sites.
+| # | Who | Key link | Commissions open? | Primary offer | Best contact | Public pricing |
+|---|-----|----------|-------------------|---------------|--------------|----------------|
+| 1 | nemesyzygy | [DA — Lorekeeper commissions](https://www.deviantart.com/nemesyzygy/journal/Lorekeeper-commissions-Organise-your-species-931975695) | unclear | setup packs, masterlist transfer, optional staff support | Discord (journal); DA | USD: Pack 1 **$50** (listed available); Pack 2 **$85**, Pack 3 **$140** (listed not yet available); support from **$20/mo** (~1h/mo); transfer from **$1/character**, **$0.25/MYO slot** (negotiable). Packs = one-time setup. |
+| 2 | itinerare (Mercury) | [Code commissions](https://www.itinerare.net/commissions/code) | no | Lorekeeper extensions (OSS); bespoke site mods | Quote forms on site; `commissions@itinerare.net` for non-quote types | USD: extensions **$40/hr** (public release); private mods **$45/hr**; both quote-only. **Closed** at check. |
+| 3 | Min (Min Layouts) | [Carrd](https://minlayouts.carrd.co/) | unclear | layout rehauls; per-page recodes | Discord / email (ToS) | **No** public rate card. ToS: refunds only if order **>$100**; payment plans if total **≥$150**; extra fees for mockups/wireframes and deadline work (amounts unspecified). |
+| 4 | Preimpression (Uri Hamman) | [Lorekeeper project](https://preimpression.art/project/lorekeeper) | unclear | UI / customization / automation (portfolio) | Site; [GitHub](https://github.com/preimpression) | None on linked page. |
+| 5 | corowne (cy) | [DA — Oekaki board](https://www.deviantart.com/corowne/journal/Lorekeeper-Oekaki-Board-836005875) | unclear | Lorekeeper creator; release-era setup signal | DA; GitHub | Automated fetch **timed out**; indexed snippets **no** numeric rate card—verify on DA. |
+| 6 | ScuffedNewt | [GitHub](https://github.com/ScuffedNewt) | n/a | core Lorekeeper contribution | GitHub | — |
+| 7 | JuniJwi | [GitHub](https://github.com/junijwi) | n/a | extensions (masterlist, profile/status, etc.) | GitHub | — |
+| 8 | Draginraptor | [Kukuri credits](https://www.kukuri-arpg.com/credits) | n/a | inventory / crafting / core systems (credited) | via credited sites / GH if listed | — |
+| 9 | SpeedyD | [LK releases](https://github.com/lk-arpg/lorekeeper/releases) | n/a | core / releases; image & watermark tooling | GitHub | — |
+| 10 | moif | [AW0005 credits](https://aw0005.com/credits) | n/a | LK customizations & extensions (credited) | via site credits | — |
+| 11 | Cylunny | [Terraliens credits](https://terraliens.org/credits) | n/a | extensions; theme / template work (credited) | via site credits | — |
+| 12 | CH3RVB | [Ghoulhoods credits](https://www.ghoulhoods.com/credits) | n/a | extension co-author (credited) | via site credits | — |
+| 13 | AnimatedCritter | [Ghoulhoods credits](https://www.ghoulhoods.com/credits) | n/a | staff / community extensions (credited) | via site credits | — |
+| 14 | MarskyMessier | [Kukuri credits](https://www.kukuri-arpg.com/credits) | n/a | prompts / forms (credited) | via site credits | — |
+| 15 | Stokori | [Kukuri credits](https://www.kukuri-arpg.com/credits) | n/a | extensions (credited) | via site credits | — |
+| 16 | Snupsplus | [AW0005 credits](https://aw0005.com/credits) | n/a | extensions (credited) | via site credits | — |
 
 ## ARPG/Lorekeeper communities you can mine for more names
 
@@ -52,7 +37,6 @@ Scope note: this list prioritizes people with visible service/build signal in AR
 
 ## Suggested cleanup pass (next)
 
-- Add `Commissions open?` (`yes/no/unclear`) per person.
-- Add `Primary offer` (`setup`, `layout`, `extension dev`, `maintenance`).
-- Add `Best contact path` (`DA`, `Discord`, `site form`, `GitHub`).
-- Keep a top 10 shortlist for outreach and pricing intelligence.
+- Tighten **Commissions open?** for rows 1–5 (DM / queue / journal freshness).
+- Add **Discord handles** or forms where missing (table currently high-level).
+- Cut a **top 10 outreach** shortlist from the table and refresh pricing row after major site edits.
