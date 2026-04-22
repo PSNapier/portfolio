@@ -70,6 +70,7 @@ function getTechIcon(tech: string) {
                     : 'bg-neutral-50 text-neutral-900',
           ]"
           :style="{
+               '--accent-color': selectedColor,
                '--selection-bg': selectedColor,
                '--selection-fg': '#171717',
           }">
@@ -128,8 +129,8 @@ function getTechIcon(tech: string) {
      bottom: 0.1em;
      width: 100%;
      height: 0.07em;
-     background: var(--accent-color, #3b82f6);
-     border-radius: 999px;
+     background: var(--accent-color, #1ECFE6);
+    border-radius: 4px;
      transition: background 0.3s;
      z-index: -1;
 }
@@ -148,12 +149,12 @@ function getTechIcon(tech: string) {
 }
 
 ::selection {
-     background: var(--selection-bg, #3b82f6);
+     background: var(--selection-bg, #1ECFE6);
      color: var(--selection-fg, #171717);
 }
 
 ::-moz-selection {
-     background: var(--selection-bg, #3b82f6);
+     background: var(--selection-bg, #1ECFE6);
      color: var(--selection-fg, #171717);
 }
 </style>

@@ -56,12 +56,12 @@ function toggleTheme() {
 
 <style>
 ::selection {
-    background: var(--selection-bg, #3b82f6);
+    background: var(--selection-bg, #1ECFE6);
     color: var(--selection-fg, #171717);
 }
 
 ::-moz-selection {
-    background: var(--selection-bg, #3b82f6);
+    background: var(--selection-bg, #1ECFE6);
     color: var(--selection-fg, #171717);
 }
 </style>

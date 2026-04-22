@@ -5,9 +5,9 @@ alwaysApply: true
 Site design spec (apply to landing, blog, and future pages):
 
 - Layout: clean single-column reading flow by default; add multi-column only when content density requires it (e.g., blog index cards + sidebar).
-- Theme: neutral base palette; dark/light support across all pages; keep background/text transitions smooth (`300ms`).
-- Accent system: use palettes defined in theme bar as canonical accent sources; one active palette color per context drives links, highlights, controls, and text selection (`--selection-bg`, `--accent-color`).
-- Theme bar: preserve palette picker behavior and visual parity across pages; new UI should consume existing theme-bar palettes instead of introducing ad-hoc accent colors.
+- Theme: neutral base palette anchored by charcoal `#2F3030` with dark/light support across all pages; keep background/text transitions smooth (`300ms`).
+- Accent system: canonical accent palette is cyan `#1ECFE6`, green `#32C36A`, gold `#EBC166`, pink `#F73676`, and purple `#A362A4`; one active palette color per context drives links, highlights, controls, and text selection (`--selection-bg`, `--accent-color`).
+- Theme bar: preserve palette picker behavior and visual parity across pages; new UI should consume these exact theme-bar palette values instead of introducing ad-hoc accent colors.
 - Top controls persistence: `resources/js/components/landing/LandingTopControls.vue` is global cross-page control surface; keep it present and behaviorally consistent across landing, blog index, and blog post pages.
 - Footer persistence: `resources/js/components/landing/LandingFooter.vue` should render consistently on landing and blog pages to keep global page framing aligned.
 - Typography: Inter for body/UI and most headings; JetBrains Mono for code/metadata/technical labels, plus intentional brand-forward hero headlines or short subheads on marketing pages.

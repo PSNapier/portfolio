@@ -1,11 +1,27 @@
 import { ref, watch } from 'vue';
 
-const colorsSoft = ['#f87171', '#fbbf24', '#34d399', '#60a5fa', '#a78bfa'];
-const colorsVivid = ['#ef4444', '#eab308', '#10b981', '#3b82f6', '#8b5cf6'];
+// Canonical accent palette — see .cursor/rules/design-spec.mdc
+// Order is intentional (cyan, green, gold, pink, purple) and index-aligned
+// between vivid (light mode) and soft (dark mode) so toggling theme preserves selection.
+const colorsVivid = [
+     '#1ECFE6', // cyan
+     '#32C36A', // green
+     '#EBC166', // gold
+     '#F73676', // pink
+     '#A362A4', // purple
+];
+
+const colorsSoft = [
+     '#4ED7EA', // cyan
+     '#50CC80', // green
+     '#EECA7A', // gold
+     '#F85A8E', // pink
+     '#B27AB2', // purple
+];
 
 export function useLandingTheme() {
      const isDark = ref(false);
-     const selectedColor = ref(colorsVivid[3]);
+     const selectedColor = ref(colorsVivid[0]);
      const colors = ref<string[]>(colorsVivid);
 
      watch(isDark, (value) => {

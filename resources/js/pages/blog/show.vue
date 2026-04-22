@@ -32,7 +32,7 @@ function formatDate(dateStr: string | null): string {
           <article>
                <h1
                     class="font-jetbrains-mono color-animate mb-4 text-5xl leading-tight font-bold transition-colors md:text-7xl"
-                    :style="{ color: 'var(--accent-color, #3b82f6)' }">
+                    :style="{ color: 'var(--accent-color, #1ECFE6)' }">
                     <span class="underline-animate color-animate">
                          {{ post.title }}
                     </span>
@@ -97,7 +97,7 @@ function formatDate(dateStr: string | null): string {
 :deep(.md-preview h3::before),
 :deep(.md-preview h4::before) {
      font-family: 'JetBrains Mono', monospace;
-     color: var(--accent-color, #3b82f6);
+     color: var(--accent-color, #1ECFE6);
      font-weight: 400;
      font-size: 0.75em;
      margin-right: 0.45em;
@@ -112,7 +112,7 @@ function formatDate(dateStr: string | null): string {
 /* Links */
 :deep(.md-preview a) {
      font-family: 'JetBrains Mono', monospace;
-     color: var(--accent-color, #3b82f6);
+     color: var(--accent-color, #1ECFE6);
      text-decoration: underline;
      text-decoration-color: transparent;
      text-decoration-thickness: 1px;
@@ -131,7 +131,7 @@ function formatDate(dateStr: string | null): string {
      position: absolute;
      left: -1.4em;
      font-family: 'JetBrains Mono', monospace;
-     color: var(--accent-color, #3b82f6);
+     color: var(--accent-color, #1ECFE6);
      font-weight: 400;
      font-size: 1em;
      opacity: 0.7;
@@ -148,7 +148,7 @@ function formatDate(dateStr: string | null): string {
 :deep(.md-preview hr::before) {
      content: '---';
      font-family: 'JetBrains Mono', monospace;
-     color: var(--accent-color, #3b82f6);
+     color: var(--accent-color, #1ECFE6);
      font-size: 0.9rem;
      font-weight: 400;
      letter-spacing: 0.25em;
@@ -159,7 +159,7 @@ function formatDate(dateStr: string | null): string {
 
 /* Blockquote — > marker */
 :deep(.md-preview blockquote) {
-     border-left: 2px solid var(--accent-color, #3b82f6);
+     border-left: 2px solid var(--accent-color, #1ECFE6);
      padding-left: 1.2em;
      font-style: normal;
      opacity: 0.8;
@@ -167,7 +167,7 @@ function formatDate(dateStr: string | null): string {
 :deep(.md-preview blockquote p:first-child::before) {
      content: '> ';
      font-family: 'JetBrains Mono', monospace;
-     color: var(--accent-color, #3b82f6);
+     color: var(--accent-color, #1ECFE6);
      font-size: 0.85em;
      opacity: 0.65;
 }
@@ -178,16 +178,16 @@ function formatDate(dateStr: string | null): string {
      font-family: 'JetBrains Mono', monospace;
      font-size: 0.85em;
      padding: 0.15em 0.4em;
-     border-radius: 3px;
-     background: color-mix(in srgb, var(--accent-color, #3b82f6) 12%, transparent);
-     color: var(--accent-color, #3b82f6);
+    border-radius: 2px;
+     background: color-mix(in srgb, var(--accent-color, #1ECFE6) 12%, transparent);
+     color: var(--accent-color, #1ECFE6);
      font-weight: 500;
 }
 
 /* Code blocks */
 :deep(.md-preview pre) {
-     border: 1px solid color-mix(in srgb, var(--accent-color, #3b82f6) 20%, transparent);
-     border-radius: 6px;
+     border: 1px solid color-mix(in srgb, var(--accent-color, #1ECFE6) 20%, transparent);
+    border-radius: 4px;
      font-family: 'JetBrains Mono', monospace;
      font-size: 0.875em;
 }
