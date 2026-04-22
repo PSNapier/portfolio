@@ -13,6 +13,7 @@ import { IconBrandGithub, IconLayoutGrid } from '@tabler/icons-vue';
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 
 const page = usePage();
+const showLorekeeper = computed(() => page.props.showLorekeeper);
 const showResume = computed(() => page.props.showResume);
 
 defineProps<{
@@ -126,6 +127,7 @@ onBeforeUnmount(() => {
                          Portfolio
                     </Link>
                     <Link
+                         v-if="showLorekeeper"
                          :href="route('lorekeeper')"
                          class="font-jetbrains-mono inline-flex items-center gap-2 text-lg font-medium decoration-transparent decoration-1 underline-offset-4 transition-[text-decoration-color,transform,opacity] duration-[var(--motion-duration-micro)] ease-[var(--motion-ease-micro)] hover:scale-105 hover:underline hover:decoration-current focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
                          :class="[
@@ -250,6 +252,7 @@ onBeforeUnmount(() => {
                     Portfolio
                </Link>
                <Link
+                    v-if="showLorekeeper"
                     :href="route('lorekeeper')"
                     class="font-jetbrains-mono color-animate inline-flex items-center gap-1 text-sm font-semibold decoration-transparent decoration-1 underline-offset-4 transition-[color,text-decoration-color,transform] duration-[var(--motion-duration-micro)] ease-[var(--motion-ease-micro)] hover:scale-105 hover:underline hover:decoration-current focus-visible:ring-2 focus-visible:ring-[var(--accent-color)] focus-visible:ring-offset-2 focus-visible:outline-none"
                     :class="
