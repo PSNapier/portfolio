@@ -1,10 +1,20 @@
 <script setup lang="ts">
 import {
      ArrowDownIcon,
+     ArrowsRightLeftIcon,
+     ArrowTrendingUpIcon,
+     ChatBubbleLeftRightIcon,
      CheckIcon,
      CloudArrowUpIcon,
+     CurrencyDollarIcon,
+     DocumentTextIcon,
+     EnvelopeIcon,
+     GlobeAltIcon,
+     HandRaisedIcon,
      PaintBrushIcon,
      PuzzlePieceIcon,
+     QuestionMarkCircleIcon,
+     Squares2X2Icon,
      WrenchScrewdriverIcon,
 } from '@heroicons/vue/24/outline';
 import { router } from '@inertiajs/vue3';
@@ -22,7 +32,7 @@ function setSelectedColor(color: string) {
      selectedColor.value = color;
 }
 
-/** Id on the “Start a conversation” h2 — matches /lorekeeper#contact and Inertia v.reset() hash scroll */
+/** Id on the “Start a conversation” h2, matches /lorekeeper#contact and Inertia v.reset() hash scroll */
 const contactAnchorId = 'contact';
 
 function scrollToContact(options?: { behavior?: ScrollBehavior }) {
@@ -76,12 +86,20 @@ const deliverables = [
 ] as const;
 
 const hostingIncludes = [
+     'Default Lorekeeper install & setup',
      'VPS hosting on managed infrastructure',
      'Cloudflare integration',
      'SSL, DNS help, and deploy pipeline',
      'Regular database backups',
      'Bug fixes on finalized work',
      'Minor edits (typos, small content tweaks, adding genes to existing logic, etc.)',
+] as const;
+
+/** Headline stats for the DeviantArt → Lorekeeper migration case study. */
+const migrationStats = [
+     { value: '20,000+', label: 'characters migrated' },
+     { value: '~20 hrs', label: 'start to finish' },
+     { value: '2,000+', label: 'member group' },
 ] as const;
 
 /** Splits 6 line items into L/R columns without grid “row” sync (avoids huge gaps when one side wraps more). */
@@ -92,16 +110,24 @@ const hostingIncludesColumns = computed(() => ({
 
 const phases = [
      {
-          title: 'Phase 1 — Shell',
-          body: 'Global theme, header, footer, home layout scaffold. You see the site take shape early and can redirect before detail work starts.',
+          icon: HandRaisedIcon,
+          title: 'First contact',
+          body: "We start with a get-to-know-you email. Share any questions, concerns, or must-haves and I'll address them up front.",
      },
      {
-          title: 'Phase 2 — Widgets',
-          body: 'The interactive bits: carousels, featured/random characters, currency strips, nav badges, any admin-driven content.',
+          icon: DocumentTextIcon,
+          title: 'A shared plan',
+          body: 'For deeper customization, I set up a reference document in Google Docs. We populate it with your requests, and I cross items off as they ship. A running session log lives there too, so you can always see exactly where my time went.',
      },
      {
-          title: 'Phase 3 — Polish',
-          body: 'Responsive pass, accessibility cleanup, edge cases (no eligible character, logged-out states), and performance tuning before launch.',
+          icon: ArrowTrendingUpIcon,
+          title: 'Steady, visible progress',
+          body: 'Sessions typically run 1–3 hours, usually with changes to show by the end. I touch base after each one so we stay on the same page and my time goes where you want it.',
+     },
+     {
+          icon: CurrencyDollarIcon,
+          title: 'Predictable cost',
+          body: 'Monthly caps on dev work are available, keeping the price consistent and manageable while we make steady, ongoing progress.',
      },
 ] as const;
 
@@ -118,8 +144,8 @@ const faq = [
           a: 'For many content areas, yes. I have built in-site admin tooling for events, news, and page content on previous projects, and can scope a similar system for yours.',
      },
      {
-          q: "What's included in the $25/month hosting?",
-          a: 'Hosting itself, routine updates, backups, bug fixes on finalized work, and minor edits. Larger feature work or redesigns are quoted separately.',
+          q: "What's included in the $45/month hosting?",
+          a: 'A default Lorekeeper setup, hosting itself, routine updates, backups, bug fixes on finalized work, and minor edits. Larger feature work or redesigns are quoted at an hourly rate.',
      },
      {
           q: "What's not included?",
@@ -135,26 +161,9 @@ const faq = [
      },
 ] as const;
 
-type ProjectType =
-     | 'New setup'
-     | 'Reskin'
-     | 'Extension'
-     | 'Managed hosting'
-     | 'Other';
-
-const projectTypes: ProjectType[] = [
-     'New setup',
-     'Reskin',
-     'Extension',
-     'Managed hosting',
-     'Other',
-];
-
 const form = reactive({
      name: '',
      email: '',
-     projectType: 'New setup' as ProjectType,
-     budget: '',
      message: '',
 });
 
@@ -185,15 +194,8 @@ const messageRemaining = computed(() => messageMax - form.message.length);
 function handleSubmit() {
      if (!validate()) return;
 
-     const subject = `Lorekeeper inquiry — ${form.projectType}`;
-     const bodyLines = [
-          `Name: ${form.name}`,
-          `Email: ${form.email}`,
-          `Project type: ${form.projectType}`,
-     ];
-     if (form.budget.trim()) {
-          bodyLines.push(`Budget / timeline: ${form.budget}`);
-     }
+     const subject = 'Lorekeeper inquiry';
+     const bodyLines = [`Name: ${form.name}`, `Email: ${form.email}`];
      bodyLines.push('', form.message);
 
      const href = `mailto:AbatureStudio@gmail.com?subject=${encodeURIComponent(
@@ -252,7 +254,7 @@ function handleSubmit() {
                               '--accent-color': selectedColor,
                               color: selectedColor,
                          }">
-                         Lorekeeper Work
+                         Lorekeeper
                     </span>
                </div>
                <div
@@ -283,7 +285,11 @@ function handleSubmit() {
           <!-- What I do -->
           <section class="content-shell-narrow mt-6 w-full">
                <h2
-                    class="font-jetbrains-mono color-animate mb-6 text-3xl font-bold transition-colors">
+                    class="font-jetbrains-mono color-animate mb-6 flex items-center gap-2.5 text-3xl font-bold transition-colors">
+                    <Squares2X2Icon
+                         class="h-7 w-7 shrink-0"
+                         :style="{ color: selectedColor }"
+                         aria-hidden="true" />
                     What I do
                </h2>
                <div class="grid gap-4 sm:grid-cols-2">
@@ -320,6 +326,152 @@ function handleSubmit() {
                </div>
           </section>
 
+          <!-- Recent work -->
+          <section class="content-shell-narrow mt-16 w-full">
+               <h2
+                    class="font-jetbrains-mono color-animate mb-6 flex items-center gap-2.5 text-3xl font-bold transition-colors">
+                    <GlobeAltIcon
+                         class="h-7 w-7 shrink-0"
+                         :style="{ color: selectedColor }"
+                         aria-hidden="true" />
+                    Recent work
+               </h2>
+               <a
+                    href="https://arcticsons.online/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="color-animate group block rounded-xl border p-5 transition-colors hover:scale-[1.01]"
+                    :class="
+                         isDark
+                              ? 'border-neutral-800 bg-neutral-900/60'
+                              : 'border-neutral-200 bg-white'
+                    ">
+                    <div
+                         class="arcticsons-frame color-animate mb-4 h-64 w-full overflow-hidden rounded-lg border transition-colors sm:h-72"
+                         :class="
+                              isDark
+                                   ? 'border-neutral-800'
+                                   : 'border-neutral-200'
+                         ">
+                         <img
+                              src="/imgs/example-arcticsons.png"
+                              alt="Arcticsons Lorekeeper front page"
+                              loading="lazy"
+                              class="arcticsons-pan block w-full" />
+                    </div>
+                    <div
+                         class="flex flex-wrap items-center justify-between gap-2">
+                         <h3 class="font-jetbrains-mono text-lg font-semibold">
+                              Arcticsons
+                         </h3>
+                         <span
+                              class="font-jetbrains-mono inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold"
+                              :style="{
+                                   backgroundColor: selectedColor,
+                                   color: isDark ? '#171717' : '#fafafa',
+                              }">
+                              Live site
+                         </span>
+                    </div>
+                    <p
+                         class="font-inter color-animate mt-2 text-base leading-relaxed transition-colors md:text-lg"
+                         :class="
+                              isDark ? 'text-neutral-300' : 'text-neutral-700'
+                         ">
+                         A finished Lorekeeper front end with a custom winter
+                         theme, with themed nav and panels, a new-character
+                         showcase, and the full activity and guide flows,
+                         running stable in production.
+                    </p>
+                    <div class="mt-3 flex justify-end">
+                         <span
+                              class="underline-animate underline-on-hover font-jetbrains-mono text-sm font-semibold"
+                              :style="{ color: selectedColor }">
+                              Visit arcticsons.online →
+                         </span>
+                    </div>
+               </a>
+          </section>
+
+          <!-- Case study: DeviantArt → Lorekeeper migration -->
+          <section class="content-shell-narrow mt-16 w-full">
+               <h2
+                    class="font-jetbrains-mono color-animate mb-3 flex items-center gap-2.5 text-3xl font-bold transition-colors">
+                    <ArrowsRightLeftIcon
+                         class="h-7 w-7 shrink-0"
+                         :style="{ color: selectedColor }"
+                         aria-hidden="true" />
+                    Case study, migrating 20,000+ characters
+               </h2>
+               <div
+                    class="font-inter color-animate space-y-4 text-base leading-relaxed transition-colors md:text-lg"
+                    :class="isDark ? 'text-neutral-300' : 'text-neutral-700'">
+                    <p>
+                         A well-established ARPG group with over 2,000 members
+                         was moving to Lorekeeper. They handed me a single
+                         Google spreadsheet: character records, each linking to
+                         art hosted on DeviantArt, plus a little info. Their
+                         plan was to recruit members and volunteers to copy it
+                         all over by hand, likely hundreds, if not thousands, of
+                         man-hours.
+                    </p>
+                    <p>
+                         The catch: DeviantArt's API won't return a deviation
+                         from its URL alone. It needs the internal deviation ID.
+                         So I pulled the full galleries of several DeviantArt
+                         accounts and a group, extracted the character IDs from
+                         each deviation, and matched them back to the
+                         spreadsheet, debugging mismatches along the way. With
+                         IDs linked, I fetched every image and description,
+                         converted the art into performant formats, adapted
+                         Lorekeeper to accept the group's custom ID scheme, and
+                         parsed genetic data straight out of the descriptions to
+                         populate the database.
+                    </p>
+                    <p>
+                         What was quoted as hundreds-to-thousands of volunteer
+                         hours ran in about twenty. I also built a low-friction
+                         admin tool inside the site itself, so staff can fill
+                         any gaps by hand in seconds.
+                    </p>
+               </div>
+
+               <div class="mt-8 grid gap-4 sm:grid-cols-3">
+                    <div
+                         v-for="stat in migrationStats"
+                         :key="stat.label"
+                         class="color-animate rounded-xl border p-5 text-center transition-colors"
+                         :class="
+                              isDark
+                                   ? 'border-neutral-800 bg-neutral-900/60'
+                                   : 'border-neutral-200 bg-white'
+                         ">
+                         <p
+                              class="font-jetbrains-mono text-3xl font-bold md:text-4xl"
+                              :style="{ color: selectedColor }">
+                              {{ stat.value }}
+                         </p>
+                         <p
+                              class="font-inter color-animate mt-1 text-sm transition-colors"
+                              :class="
+                                   isDark
+                                        ? 'text-neutral-400'
+                                        : 'text-neutral-600'
+                              ">
+                              {{ stat.label }}
+                         </p>
+                    </div>
+               </div>
+
+               <p
+                    class="font-inter color-animate mt-6 text-base leading-relaxed transition-colors"
+                    :class="isDark ? 'text-neutral-300' : 'text-neutral-700'">
+                    The pipeline is reusable. If your characters live in
+                    spreadsheets or on DeviantArt, this is a solved problem, and
+                    it goes faster every time.
+               </p>
+          </section>
+
           <!-- Managed hosting price tile -->
           <section
                class="mt-16 flex w-full justify-center transition-colors"
@@ -335,15 +487,17 @@ function handleSubmit() {
                          </p>
                          <p
                               class="font-jetbrains-mono text-5xl font-bold md:text-6xl">
-                              $25<span class="text-2xl md:text-3xl"
+                              $45<span class="text-2xl md:text-3xl"
                                    >/month</span
                               >
                          </p>
                          <p
                               class="font-inter mt-2 max-w-xl text-base leading-relaxed md:text-lg">
-                              Your Lorekeeper site lives on my infrastructure,
-                              with upkeep and small fixes rolled in. No hourly
-                              invoicing for the little stuff.
+                              A default Lorekeeper setup on my managed
+                              infrastructure, with upkeep and small fixes rolled
+                              in. No hourly invoicing for the little stuff.
+                              Custom layouts and feature work are available at
+                              an hourly rate. Contact for details.
                          </p>
                     </div>
                     <div
@@ -386,25 +540,35 @@ function handleSubmit() {
                               Ask about hosting
                          </button>
                     </div>
+                    <p
+                         class="font-inter mx-auto mt-6 max-w-xl text-center text-sm leading-relaxed opacity-80">
+                         Dev work is billed transparently. A shared session log
+                         and optional monthly caps keep costs predictable, so
+                         your bill never runs away from you.
+                    </p>
                </div>
           </section>
 
           <!-- Approach / phases -->
           <section class="content-shell-narrow mt-16 w-full">
                <h2
-                    class="font-jetbrains-mono color-animate mb-3 text-3xl font-bold transition-colors">
-                    How engagements work
+                    class="font-jetbrains-mono color-animate mb-3 flex items-center gap-2.5 text-3xl font-bold transition-colors">
+                    <ChatBubbleLeftRightIcon
+                         class="h-7 w-7 shrink-0"
+                         :style="{ color: selectedColor }"
+                         aria-hidden="true" />
+                    How we'll work together
                </h2>
                <p
                     class="font-inter color-animate mb-6 max-w-2xl text-base leading-relaxed transition-colors"
                     :class="isDark ? 'text-neutral-300' : 'text-neutral-700'">
-                    Larger builds run in phases. You see working pieces early,
-                    get a chance to redirect between phases, and only pay for
-                    the scope you actually want to ship.
+                    Every project starts with a conversation, not a contract.
+                    Here's how we work together, from the first email to
+                    finished features.
                </p>
                <ol class="space-y-4">
                     <li
-                         v-for="(phase, idx) in phases"
+                         v-for="phase in phases"
                          :key="phase.title"
                          class="color-animate flex gap-4 rounded-xl border p-5 transition-colors"
                          :class="
@@ -413,12 +577,15 @@ function handleSubmit() {
                                    : 'border-neutral-200 bg-white'
                          ">
                          <div
-                              class="font-jetbrains-mono flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm font-bold"
+                              class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full"
                               :style="{
                                    backgroundColor: selectedColor,
                                    color: isDark ? '#171717' : '#fafafa',
                               }">
-                              {{ idx + 1 }}
+                              <component
+                                   :is="phase.icon"
+                                   class="h-6 w-6"
+                                   aria-hidden="true" />
                          </div>
                          <div>
                               <h3
@@ -444,7 +611,11 @@ function handleSubmit() {
                v-if="showFaq"
                class="content-shell-narrow mt-16 w-full">
                <h2
-                    class="font-jetbrains-mono color-animate mb-6 text-3xl font-bold transition-colors">
+                    class="font-jetbrains-mono color-animate mb-6 flex items-center gap-2.5 text-3xl font-bold transition-colors">
+                    <QuestionMarkCircleIcon
+                         class="h-7 w-7 shrink-0"
+                         :style="{ color: selectedColor }"
+                         aria-hidden="true" />
                     FAQ
                </h2>
                <dl class="space-y-5">
@@ -474,13 +645,17 @@ function handleSubmit() {
                </dl>
           </section>
 
-          <!-- #contact: tight vertical gap (mt) after content above; minimal scroll-mt — chrome is small corner nav, not a full bar -->
+          <!-- #contact: tight vertical gap (mt) after content above, minimal scroll-mt. Chrome is small corner nav, not a full bar -->
           <section
                class="content-shell-narrow mt-8 w-full sm:mt-10"
                :aria-labelledby="contactAnchorId">
                <h2
                     :id="contactAnchorId"
-                    class="font-jetbrains-mono color-animate mb-2 scroll-mt-2 text-3xl font-bold transition-colors sm:scroll-mt-3">
+                    class="font-jetbrains-mono color-animate mb-2 flex scroll-mt-2 items-center gap-2.5 text-3xl font-bold transition-colors sm:scroll-mt-3">
+                    <EnvelopeIcon
+                         class="h-7 w-7 shrink-0"
+                         :style="{ color: selectedColor }"
+                         aria-hidden="true" />
                     Start a conversation
                </h2>
                <p
@@ -542,46 +717,6 @@ function handleSubmit() {
                          </label>
                     </div>
 
-                    <div class="grid gap-4 sm:grid-cols-2">
-                         <label class="font-inter block text-sm">
-                              <span class="font-medium">Project type</span>
-                              <select
-                                   v-model="form.projectType"
-                                   class="color-animate mt-1 block w-full rounded-md border px-3 py-2 text-sm transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-color)]"
-                                   :class="
-                                        isDark
-                                             ? 'border-neutral-700 bg-neutral-950 text-neutral-50'
-                                             : 'border-neutral-300 bg-white text-neutral-900'
-                                   ">
-                                   <option
-                                        v-for="type in projectTypes"
-                                        :key="type"
-                                        :value="type">
-                                        {{ type }}
-                                   </option>
-                              </select>
-                         </label>
-
-                         <label class="font-inter block text-sm">
-                              <span class="font-medium">
-                                   Budget / timeline
-                                   <span class="font-normal opacity-60">
-                                        (optional)
-                                   </span>
-                              </span>
-                              <input
-                                   v-model="form.budget"
-                                   type="text"
-                                   placeholder="e.g. launching in 2 months"
-                                   class="color-animate mt-1 block w-full rounded-md border px-3 py-2 text-sm transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-color)]"
-                                   :class="
-                                        isDark
-                                             ? 'border-neutral-700 bg-neutral-950 text-neutral-50 placeholder:text-neutral-500'
-                                             : 'border-neutral-300 bg-white text-neutral-900 placeholder:text-neutral-400'
-                                   " />
-                         </label>
-                    </div>
-
                     <label class="font-inter block text-sm">
                          <span class="font-medium">Message</span>
                          <textarea
@@ -613,7 +748,7 @@ function handleSubmit() {
                          </div>
                     </label>
 
-                    <div class="flex flex-col items-start gap-3 pt-2">
+                    <div class="flex flex-col items-end gap-3 pt-2">
                          <button
                               type="submit"
                               class="font-jetbrains-mono inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-none hover:scale-105 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
@@ -622,7 +757,7 @@ function handleSubmit() {
                                    color: isDark ? '#171717' : '#fafafa',
                                    '--tw-ring-color': selectedColor,
                               }">
-                              Open in my email app
+                              Open In Email App
                          </button>
                          <p
                               class="font-inter text-xs leading-relaxed"
@@ -662,3 +797,54 @@ function handleSubmit() {
           <LandingFooter />
      </main>
 </template>
+
+<style scoped>
+/* Scrolls the full-page Arcticsons screenshot down inside its fixed frame, then
+   fades back to the top. --frame-h is the visible window height, so the scroll
+   stops exactly at the image's bottom regardless of its height. No layout shift. */
+.arcticsons-frame {
+     --frame-h: 16rem;
+}
+
+@media (min-width: 640px) {
+     .arcticsons-frame {
+          --frame-h: 18rem;
+     }
+}
+
+.arcticsons-pan {
+     animation: arcticsons-scroll 18s ease-in-out infinite;
+}
+
+@keyframes arcticsons-scroll {
+     0%,
+     6% {
+          transform: translateY(0);
+          opacity: 1;
+     }
+     78% {
+          transform: translateY(calc(-100% + var(--frame-h)));
+          opacity: 1;
+     }
+     88% {
+          transform: translateY(calc(-100% + var(--frame-h)));
+          opacity: 0;
+     }
+     89% {
+          transform: translateY(0);
+          opacity: 0;
+     }
+     100% {
+          transform: translateY(0);
+          opacity: 1;
+     }
+}
+
+/* TEMP: reduced-motion guard disabled for testing — re-enable before shipping.
+@media (prefers-reduced-motion: reduce) {
+     .arcticsons-pan {
+          animation: none;
+     }
+}
+*/
+</style>

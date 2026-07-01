@@ -12,11 +12,11 @@ Route::get('/', function () {
 Route::get('/blog', IndexController::class)->name('blog.index');
 Route::get('/blog/{slug}', ShowController::class)->name('blog.show');
 
-if (! app()->environment('production')) {
-    Route::get('/lorekeeper', function () {
-        return Inertia::render('Lorekeeper');
-    })->name('lorekeeper');
+Route::get('/lorekeeper', function () {
+    return Inertia::render('Lorekeeper');
+})->name('lorekeeper');
 
+if (! app()->environment('production')) {
     Route::get('/resume', function () {
         return Inertia::render('Resume');
     })->name('resume');

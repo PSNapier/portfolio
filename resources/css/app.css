@@ -131,6 +131,15 @@
                    var(--motion-ease-standard);
     }
 
+    .underline-on-hover {
+         text-decoration-color: transparent;
+         transition: none;
+    }
+
+    .group:hover .underline-on-hover {
+         text-decoration-color: currentColor;
+    }
+
     .examples-cta {
          transition:
               background-color var(--motion-duration-color)
@@ -423,6 +432,11 @@
      }
      body {
           @apply bg-inherit text-foreground;
+     }
+
+     button:not(:disabled),
+     [role='button']:not([aria-disabled='true']) {
+          cursor: pointer;
      }
 }
 
