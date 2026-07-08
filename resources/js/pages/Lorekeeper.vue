@@ -202,7 +202,16 @@ function handleSubmit() {
           subject,
      )}&body=${encodeURIComponent(bodyLines.join('\n'))}`;
 
-     window.location.href = href;
+     // Trigger via a real anchor click. Assigning window.location.href to a
+     // mailto: URI is dropped silently by some browsers, leaving the button
+     // looking dead. A synthesized <a> click matches a normal mailto link.
+     const link = document.createElement('a');
+     link.href = href;
+     link.rel = 'noopener';
+     document.body.appendChild(link);
+     link.click();
+     link.remove();
+
      submitted.value = true;
 }
 </script>
