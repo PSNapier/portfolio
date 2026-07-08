@@ -766,7 +766,11 @@ function handleSubmit() {
                                    color: isDark ? '#171717' : '#fafafa',
                                    '--tw-ring-color': selectedColor,
                               }">
-                              Open In Email App
+                                  <a
+                                       href="mailto:AbatureStudio@gmail.com?subject=Lorekeeper%20inquiry">
+                                           Open In Email App
+                                  </a>
+
                          </button>
                          <p
                               class="font-inter text-xs leading-relaxed"
